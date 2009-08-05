@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<!-- ////////////////////////////////////////////////////////////////////// -->
+<!-- Copyright (c) 2009 by KLab Inc, All rights reserved.                   -->
+<!--                                                                        -->
+<!-- Written by Naohide Sano                                                -->
+<!--                                                                        -->
+<!-- klab-commons-cli                                                       -->
+<!--                                                                        -->
+<!-- @author	Naohide Sano                                                -->
+<!-- @version	0.00	090128	nsano	initial version                     -->
+<!--                                                                        -->
+<!-- ////////////////////////////////////////////////////////////////////// -->
+
+<project name="klab-commons-cli" default="compile" basedir="."
+	     xmlns:ivy="antlib:org.apache.ivy.ant">
+
+  <property file="local.properties" />
+
+  <property name="dir.src" value="src/main/java" />
+  <property name="dir.build" value="target/classes" />
+
+  <!-- クラスパスの定義 -->
+  <path id="project.class.path">
+    <pathelement location="${dir.build}" />
+    <fileset dir="lib">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+
+  <!-- ターゲットの定義 -->
+
+  <!-- clean -->
+  <target name="clean" description="ビルド環境のクリア">
+    <delete dir="${dir.build}" />
+    <delete>
+      <fileset dir="lib">
+        <include name="*.jar" />
+      </fileset>
+    </delete>
+  </target>
+
+  <!-- prepare -->
+  <target name="prepare" description="ビルド環境の準備">
+    <mkdir dir="${dir.build}" />
+    <ivy:settings file="ivy-settings.xml" />
+    <ivy:convertpom pomFile="pom.xml" ivyFile="ivy.xml" />
+    <ivy:retrieve />
+  </target>
+
+  <!-- javac -->
+  <target name="compile" depends="prepare" description="コンパイル">
+    <javac debug="on" deprecation="on" destdir="${dir.build}">
+      <classpath refid="project.class.path" />
+      <include name="**/*.java" />
+      <src path="${dir.src}" />
+    </javac>
+  </target>
+
+  <!-- run -->
+  <target name="run" depends="compile" description="load project file">
+    <java classname="jp.klab.imagetool.Main" fork="yes">
+      <jvmarg value="-Dfile.encoding=${file.encoding}" />
+      <classpath refid="project.class.path" />
+    </java>
+  </target>
+
+</project>
+
+<!-- -->
