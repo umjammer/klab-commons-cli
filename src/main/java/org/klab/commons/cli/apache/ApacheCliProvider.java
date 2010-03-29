@@ -45,7 +45,7 @@ public class ApacheCliProvider extends CliProvider {
 
     /* */
     @SuppressWarnings("static-access")
-    public void bind(String[] sourceArgs, Object destBean) {
+    public <T> void bind(String[] sourceArgs, T destBean) {
 
         //
         CommandLineParser commandLineParser;
@@ -126,7 +126,7 @@ public class ApacheCliProvider extends CliProvider {
         CommandLine commandLine = null;
         try {
             commandLine = commandLineParser.parse(options, sourceArgs);
-        } catch(ParseException e) {
+        } catch (ParseException e) {
             exceptionHandler.handleException(new org.klab.commons.cli.Options.ExceptionHandler.Context(e, destBean) {
                 public void printHelp() {
                     new HelpFormatter().printHelp(bean.getClass().getSimpleName(), options, true);
@@ -160,7 +160,7 @@ public class ApacheCliProvider extends CliProvider {
             }
             if (commandLine.hasOption(opt)) {
                 if (Binded.Util.isBinded(field)) {
-                    Binder binder = Binded.Util.getBinder(field);
+                    Binder<T> binder = Binded.Util.getBinder(field);
                     binder.bind(destBean, commandLine.getOptionValue(opt), binderContext);
                 } else {
                     Class<?> fieldClass = field.getType();
@@ -182,7 +182,7 @@ logger.debug(option.getArgName() + "[" + opt + "]: " + BeanUtil.getFieldValue(fi
 
             int index = org.klab.commons.cli.Argument.Util.getIndex(field);
             if (Binded.Util.isBinded(field)) {
-                Binder binder = Binded.Util.getBinder(field);
+                Binder<T> binder = Binded.Util.getBinder(field);
 //logger.debug("args[" + index + "]: " + commandLine.getArgs()[index]);
                 binder.bind(destBean, commandLine.getArgs()[index], binderContext);
             } else {

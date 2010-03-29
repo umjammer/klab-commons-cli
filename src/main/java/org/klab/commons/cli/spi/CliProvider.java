@@ -46,10 +46,12 @@ public abstract class CliProvider {
      * コマンドライン引数の文字列配列 sourceArgs を destBeans のフィールドの値として
      * 設定します。
      * 
+     * TODO exception handling
+     * 
      * @param sourceArgs
      * @param destBeans
      */
-    public abstract void bind(String[] sourceArgs, Object destBeans);
+    public abstract <T> void bind(String[] sourceArgs, T destBeans);
 }
 
 /* */

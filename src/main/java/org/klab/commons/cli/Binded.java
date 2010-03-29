@@ -29,7 +29,7 @@ public @interface Binded {
     /**
      * フィールドに値を代入する実装クラス
      */
-    Class<? extends Binder> binder();
+    Class<? extends Binder<?>> binder();
 
     /**
      * 実装クラスに依って用途は違います
@@ -51,10 +51,11 @@ public @interface Binded {
          * @param field @{@link Binded} annotated field.
          * @throws NullPointerException when field is not annotated by {@link Binded}
          */
-        public static Binder getBinder(Field field) {
+        public static <T> Binder<T> getBinder(Field field) {
             try {
                 Binded binded = field.getAnnotation(Binded.class);
-                Binder binder = binded.binder().newInstance();
+                @SuppressWarnings("unchecked")
+                Binder<T> binder = (Binder<T>) binded.binder().newInstance();
                 return binder; 
             } catch (Exception e) {
                 throw (RuntimeException) new IllegalStateException().initCause(e);

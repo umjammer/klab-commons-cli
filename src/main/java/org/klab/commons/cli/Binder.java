@@ -13,7 +13,7 @@ package org.klab.commons.cli;
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070224 nsano initial version <br>
  */
-public interface Binder {
+public interface Binder<T> {
 
     /** コマンドライン引数解析の状態を表すクラスです。 */
     public abstract class Context {
@@ -22,7 +22,7 @@ public interface Binder {
     }
 
     /** ここで代入を実装します。 */
-    void bind(Object bean, String arg, Context context);
+    void bind(T bean, String arg, Context context);
 }
 
 /* */

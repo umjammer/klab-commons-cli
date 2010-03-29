@@ -102,9 +102,9 @@ public class OptionsTest {
         String string;
     }
 
-    public static class X_Binder implements Binder {
-        public void bind(Object bean, String arg, Context context) {
-            Test3.class.cast(bean).string = arg.toUpperCase();
+    public static class X_Binder implements Binder<Test3> {
+        public void bind(Test3 bean, String arg, Context context) {
+            bean.string = arg.toUpperCase();
         }
     }
 
@@ -140,7 +140,7 @@ public class OptionsTest {
     }
 
     @Options
-    class Test5 {
+    static class Test5 {
         @Option(argName = "String", description = "string value", args = 1, option = "x", required = false)
         String string;
         @Argument(index = 0)
@@ -152,9 +152,9 @@ public class OptionsTest {
         File a2;
     }
 
-    public static class A1_Binder implements Binder {
-        public void bind(Object bean, String arg, Context context) {
-            Test5.class.cast(bean).a1= new File(arg);
+    public static class A1_Binder implements Binder<Test5> {
+        public void bind(Test5 bean, String arg, Context context) {
+            bean.a1= new File(arg);
         }
     }
 
@@ -192,13 +192,13 @@ System.err.println(option);
         int a;
     }
 
-    public static class X_Binder7 implements Binder {
-        public void bind(Object bean, String arg, Context context) {
+    public static class X_Binder7 implements Binder<Test7> {
+        public void bind(Test7 bean, String arg, Context context) {
             assertEquals(true, context.hasOption("x"));
             assertEquals(false, context.hasOption("y"));
             assertEquals(false, context.hasOption("yy"));
             assertEquals(false, context.hasOption("a"));
-            Test7.class.cast(bean).string = arg.toUpperCase();
+            bean.string = arg.toUpperCase();
         }
     }
 
