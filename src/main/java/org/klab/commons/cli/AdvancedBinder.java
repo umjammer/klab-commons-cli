@@ -10,6 +10,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 import vavi.beans.BeanUtil;
+import vavi.beans.DefaultBinder;
 
 
 /**

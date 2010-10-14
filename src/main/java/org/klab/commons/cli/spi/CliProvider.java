@@ -6,8 +6,9 @@
 
 package org.klab.commons.cli.spi;
 
-import org.klab.commons.cli.DefaultBinder;
 import org.klab.commons.cli.Options.ExceptionHandler;
+
+import vavi.beans.DefaultBinder;
 
 
 /**

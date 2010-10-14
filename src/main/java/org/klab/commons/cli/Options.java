@@ -13,6 +13,8 @@ import java.lang.annotation.Target;
 
 import org.klab.commons.cli.spi.CliProvider;
 
+import vavi.beans.DefaultBinder;
+
 
 /**
  * コマンドライン引数を設定したい POJO に対して設定します。
