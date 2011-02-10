@@ -14,10 +14,10 @@ import java.lang.reflect.Field;
 
 
 /**
- * {@link Option} �̃t�B�[���h�̐ݒ肾���ł͎w�肵����Ȃ�
- * ���G�ȑ�����s���t�B�[���h�ɑ΂��Đݒ肵�܂��B
- * ����̎����� {@link Binder} �C���^�[�t�F�[�X����������
- * �N���X�ōs���Ă��������B
+ * {@link Option} のフィールドの設定だけでは指定しきれない
+ * 複雑な代入を行うフィールドに対して設定します。
+ * 代入の実装は {@link Binder} インターフェースを実装した
+ * クラスで行ってください。
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070224 nsano initial version <br>
@@ -27,17 +27,17 @@ import java.lang.reflect.Field;
 public @interface Binded {
 
     /**
-     * �t�B�[���h�ɒl������������N���X
+     * フィールドに値を代入する実装クラス
      */
     Class<? extends Binder<?>> binder();
 
     /**
-     * �����N���X�Ɉ˂��ėp�r�͈Ⴂ�܂�
+     * 実装クラスに依って用途は違います
      */
     String value() default "";
 
     /**
-     * TODO �A�m�e�[�V���������\�b�h�w��̏ꍇ 
+     * TODO アノテーションがメソッド指定の場合 
      */
     static class Util {
 

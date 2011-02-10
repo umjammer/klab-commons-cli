@@ -13,8 +13,8 @@ import java.lang.annotation.Target;
 
 
 /**
- * ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø”‚ğ‘ã“ü‚·‚éƒtƒB[ƒ‹ƒh‚É‘Î‚µ‚Ä
- * İ’è‚µ‚Ü‚·B 
+ * ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°ã‚’ä»£å…¥ã™ã‚‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«å¯¾ã—ã¦
+ * è¨­å®šã—ã¾ã™ã€‚ 
  *
  * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (nsano)
  * @version 0.00 080225 nsano initial version <br>
@@ -23,19 +23,19 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Option {
 
-    /** ˆø”‚ªæ‚éˆø”‚Ì” */
+    /** å¼•æ•°ãŒå–ã‚‹å¼•æ•°ã®æ•° */
     int args() default 0;
 
-    /** ˆø”‚Ì–¼‘O */
+    /** å¼•æ•°ã®åå‰ */
     String argName() default "";
 
-    /** •K{ˆø”‚©‚Ç‚¤‚© */
+    /** å¿…é ˆå¼•æ•°ã‹ã©ã†ã‹ */
     boolean required() default false;
 
-    /** ˆø”‚Ìà–¾ */
+    /** å¼•æ•°ã®èª¬æ˜ */
     String description() default "";
 
-    /** ˆø”‚Ì–¼‘O‚ÌÈ—ªŒ` */
+    /** å¼•æ•°ã®åå‰ã®çœç•¥å½¢ */
     String option();
 }
 

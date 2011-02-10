@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 
 
 /**
- * ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø”‚Å {@link Option} ˆÈŠO‚Ì€–Ú
+ * ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°ã§ {@link Option} ä»¥å¤–ã®é …ç›®
  *
  * @author <a href="mailto:sano-n@klab.jp">Naohide Sano</a> (nsano)
  * @version 0.00 2009/05/31 nsano initial version <br>
@@ -23,11 +23,11 @@ import java.lang.reflect.Field;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Argument {
 
-    /** ‡”Ô */
+    /** é †ç•ª */
     int index();
 
     /**
-     * TODO ƒAƒmƒe[ƒVƒ‡ƒ“‚ªƒƒ\ƒbƒhw’è‚Ìê‡ 
+     * TODO ã‚¢ãƒãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ãŒãƒ¡ã‚½ãƒƒãƒ‰æŒ‡å®šã®å ´åˆ 
      */
     static class Util {
 

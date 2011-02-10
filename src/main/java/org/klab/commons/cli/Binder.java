@@ -8,20 +8,20 @@ package org.klab.commons.cli;
 
 
 /**
- * ƒtƒB[ƒ‹ƒh‚Ö‚Ì•¡G‚È‘ã“ü‚ğÀ‘•‚µ‚Ü‚·B 
+ * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¸ã®è¤‡é›‘ãªä»£å…¥ã‚’å®Ÿè£…ã—ã¾ã™ã€‚ 
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070224 nsano initial version <br>
  */
 public interface Binder<T> {
 
-    /** ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø”‰ğÍ‚Ìó‘Ô‚ğ•\‚·ƒNƒ‰ƒX‚Å‚·B */
+    /** ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°è§£æã®çŠ¶æ…‹ã‚’è¡¨ã™ã‚¯ãƒ©ã‚¹ã§ã™ã€‚ */
     public abstract class Context {
-        /** w’è‚µ‚½ {@link Option#option} ‚ª‘¶İ‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©B */
+        /** æŒ‡å®šã—ãŸ {@link Option#option} ãŒå­˜åœ¨ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹ã€‚ */
         public abstract boolean hasOption(String option);
     }
 
-    /** ‚±‚±‚Å‘ã“ü‚ğÀ‘•‚µ‚Ü‚·B */
+    /** ã“ã“ã§ä»£å…¥ã‚’å®Ÿè£…ã—ã¾ã™ã€‚ */
     void bind(T bean, String arg, Context context);
 }
 

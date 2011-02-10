@@ -17,9 +17,9 @@ import vavi.beans.DefaultBinder;
 
 
 /**
- * ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø”‚ğİ’è‚µ‚½‚¢ POJO ‚É‘Î‚µ‚Äİ’è‚µ‚Ü‚·B
- * ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø”‚ğ‰ğÍ‚·‚éƒvƒƒoƒCƒ_[ƒNƒ‰ƒX‚Æ
- * —áŠOˆ—‚ğs‚¤ƒNƒ‰ƒXA‘ã“ü‚ğs‚¤ƒNƒ‰ƒX‚ğİ’è‚µ‚Ü‚·B 
+ * ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°ã‚’è¨­å®šã—ãŸã„ POJO ã«å¯¾ã—ã¦è¨­å®šã—ã¾ã™ã€‚
+ * ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°ã‚’è§£æã™ã‚‹ãƒ—ãƒ­ãƒã‚¤ãƒ€ãƒ¼ã‚¯ãƒ©ã‚¹ã¨
+ * ä¾‹å¤–å‡¦ç†ã‚’è¡Œã†ã‚¯ãƒ©ã‚¹ã€ä»£å…¥ã‚’è¡Œã†ã‚¯ãƒ©ã‚¹ã‚’è¨­å®šã—ã¾ã™ã€‚ 
  *
  * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (nsano)
  * @version 0.00 080225 nsano initial version <br>
@@ -28,22 +28,22 @@ import vavi.beans.DefaultBinder;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Options {
 
-    /** ƒvƒƒoƒCƒ_[ƒNƒ‰ƒX */
+    /** ãƒ—ãƒ­ãƒã‚¤ãƒ€ãƒ¼ã‚¯ãƒ©ã‚¹ */
     Class<? extends CliProvider> cliProvider() default org.klab.commons.cli.apache.ApacheCliProvider.class;
 
-    /** —áŠOˆ—ƒNƒ‰ƒX */
+    /** ä¾‹å¤–å‡¦ç†ã‚¯ãƒ©ã‚¹ */
     Class<? extends ExceptionHandler> exceptionHandler() default ExitExceptionHandler.class;
 
-    /** ‘ã“üˆ—ƒNƒ‰ƒX */
+    /** ä»£å…¥å‡¦ç†ã‚¯ãƒ©ã‚¹ */
     Class<? extends DefaultBinder> defaultBinder() default AdvancedBinder.class;
 
-    /** {@link CliProvider} ‚ÉˆË‚Á‚Ä—p“r‚ÍŒˆ‚Ü‚è‚Ü‚·B */
+    /** {@link CliProvider} ã«ä¾ã£ã¦ç”¨é€”ã¯æ±ºã¾ã‚Šã¾ã™ã€‚ */
     String option() default "org.apache.commons.cli.BasicParser";
 
-    /** ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‰ğÍ’†‚Ì—áŠOˆ—‚ğ‹Lq‚·‚éƒNƒ‰ƒX‚Å‚·B */
+    /** ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³è§£æä¸­ã®ä¾‹å¤–å‡¦ç†ã‚’è¨˜è¿°ã™ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™ã€‚ */
     public interface ExceptionHandler {
 
-        /** ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‰ğÍ’†‚Ì—áŠO‚Ìî•ñ‚ğ•Û‚·‚éƒNƒ‰ƒX‚Å‚·B */
+        /** ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³è§£æä¸­ã®ä¾‹å¤–ã®æƒ…å ±ã‚’ä¿æŒã™ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™ã€‚ */
         public abstract class Context {
             /** */
             public Context(Exception exception, Object bean) {
@@ -51,10 +51,10 @@ public @interface Options {
                 this.bean = bean;
             }
 
-            /** ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‰ğÍ’†‚Ì—áŠO */
+            /** ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³è§£æä¸­ã®ä¾‹å¤– */
             protected Exception exception;
 
-            /** {@link Options} ‚ğİ’è‚µ‚½ bean */
+            /** {@link Options} ã‚’è¨­å®šã—ãŸ bean */
             protected Object bean;
 
             /** */
@@ -67,15 +67,15 @@ public @interface Options {
                 return bean;
             }
 
-            /** ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø”‚Ìƒwƒ‹ƒv‚ğ•\¦‚µ‚Ü‚·B */
+            /** ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°ã®ãƒ˜ãƒ«ãƒ—ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚ */
             public abstract void printHelp();
         }
 
-        /** —áŠOˆ—‚ğs‚¢‚Ü‚·B */
+        /** ä¾‹å¤–å‡¦ç†ã‚’è¡Œã„ã¾ã™ã€‚ */
         void handleException(Context context);
     }
 
-    /** ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø”‚ğˆ—‚·‚éƒ†[ƒeƒBƒŠƒeƒB‚Å‚·B */
+    /** ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°ã‚’å‡¦ç†ã™ã‚‹ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ã§ã™ã€‚ */
     class Util {
 
         /** */
@@ -118,7 +118,7 @@ public @interface Options {
         }
 
         /**
-         * POJO destBean ‚ÉƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø” sourceArgs ‚ğİ’è‚µ‚Ü‚·B
+         * POJO destBean ã«ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•° sourceArgs ã‚’è¨­å®šã—ã¾ã™ã€‚
          * @return UTF-8 URL encoded 
          */
         public static void bind(String[] sourceArgs, Object destBean) {

@@ -14,9 +14,9 @@ import vavi.beans.DefaultBinder;
 
 
 /**
- * ƒtƒB[ƒ‹ƒh‚Ö‚Ì‘ã“ü‚ðs‚¤Šg’£ƒNƒ‰ƒX‚Å‚·B
+ * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¸ã®ä»£å…¥ã‚’è¡Œã†æ‹¡å¼µã‚¯ãƒ©ã‚¹ã§ã™ã€‚
  *  
- * <li> TODO ‚à‚Á‚Æ[ŽÀ‚³‚¹‚é
+ * <li> TODO ã‚‚ã£ã¨å……å®Ÿã•ã›ã‚‹
  * 
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070224 nsano initial version <br>
@@ -24,7 +24,7 @@ import vavi.beans.DefaultBinder;
 public class AdvancedBinder extends DefaultBinder {
 
     /**
-     * {@link java.io.File} Œ^‚ÌƒtƒB[ƒ‹ƒh‚à {@link Binder} –³‚µ‚ÅÝ’è‚Å‚«‚Ü‚·B
+     * {@link java.io.File} åž‹ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚‚ {@link Binder} ç„¡ã—ã§è¨­å®šã§ãã¾ã™ã€‚
      */
     public void bind(Object destBean, Field field, Class<?> fieldClass, String value, Object elseValue) {
         if (fieldClass.equals(File.class)) {
