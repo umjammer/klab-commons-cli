@@ -17,8 +17,8 @@ import org.klab.commons.cli.Options.ExceptionHandler;
 /**
  * Option. 
  *
- * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (nsano)
- * @version 0.00 080225 nsano initial version <br>
+ * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (sano-n)
+ * @version 0.00 080225 sano-n initial version <br>
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

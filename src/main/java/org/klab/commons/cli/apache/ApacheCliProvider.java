@@ -33,10 +33,10 @@ import vavi.beans.BeanUtil;
 /**
  * ApacheCliProvider. 
  * <p>
- * {@link #option} ‚Í CommandLineParser ‚ÌƒNƒ‰ƒX–¼‚ğİ’è‚µ‚Ü‚·B
+ * {@link #option} ã¯ CommandLineParser ã®ã‚¯ãƒ©ã‚¹åã‚’è¨­å®šã—ã¾ã™ã€‚
  * </p>
- * @author <a href="mailto:sano-n@klab.jp">Naohide Sano</a> (nsano)
- * @version 0.00 2009/05/30 nsano initial version <br>
+ * @author <a href="mailto:sano-n@klab.jp">Naohide Sano</a> (sano-n)
+ * @version 0.00 2009/05/30 sano-n initial version <br>
  */
 public class ApacheCliProvider extends CliProvider {
 
@@ -121,7 +121,7 @@ public class ApacheCliProvider extends CliProvider {
         }
 
         optionFields.putAll(bindedFields);
-//logger.debug("šššš options: " + optionFields.size());
+//logger.debug("â˜…â˜…â˜…â˜… options: " + optionFields.size());
 
         CommandLine commandLine = null;
         try {

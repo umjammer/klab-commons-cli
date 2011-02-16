@@ -15,8 +15,8 @@ import org.klab.commons.cli.Options.ExceptionHandler;
 /**
  * ExitExceptionHandler. 
  *
- * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (nsano)
- * @version 0.00 080227 nsano initial version <br>
+ * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (sano-n)
+ * @version 0.00 080227 sano-n initial version <br>
  */
 public class ExitExceptionHandler implements ExceptionHandler {
     /** */

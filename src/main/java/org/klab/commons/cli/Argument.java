@@ -16,8 +16,8 @@ import java.lang.reflect.Field;
 /**
  * コマンドライン引数で {@link Option} 以外の項目
  *
- * @author <a href="mailto:sano-n@klab.jp">Naohide Sano</a> (nsano)
- * @version 0.00 2009/05/31 nsano initial version <br>
+ * @author <a href="mailto:sano-n@klab.jp">Naohide Sano</a> (sano-n)
+ * @version 0.00 2009/05/31 sano-n initial version <br>
  */
 @Target({ ElementType.FIELD, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)

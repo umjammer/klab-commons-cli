@@ -14,8 +14,8 @@ import vavi.beans.DefaultBinder;
 /**
  * CliProvider. 
  *
- * @author <a href="mailto:sano-n@klab.jp">Naohide Sano</a> (nsano)
- * @version 0.00 2009/05/30 nsano initial version <br>
+ * @author <a href="mailto:sano-n@klab.jp">Naohide Sano</a> (sano-n)
+ * @version 0.00 2009/05/30 sano-n initial version <br>
  */
 public abstract class CliProvider {
 
@@ -35,7 +35,7 @@ public abstract class CliProvider {
         this.defaultBinder = defaultBinder;
     }
 
-    /** —lX‚È—p“r‚Ég—p‚³‚ê‚Ü‚· */
+    /** æ§˜ã€…ãªç”¨é€”ã«ä½¿ç”¨ã•ã‚Œã¾ã™ */
     protected String option; 
 
     /** */
@@ -44,8 +44,8 @@ public abstract class CliProvider {
     }
 
     /**
-     * ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø”‚Ì•¶š—ñ”z—ñ sourceArgs ‚ğ destBeans ‚ÌƒtƒB[ƒ‹ƒh‚Ì’l‚Æ‚µ‚Ä
-     * İ’è‚µ‚Ü‚·B
+     * ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°ã®æ–‡å­—åˆ—é…åˆ— sourceArgs ã‚’ destBeans ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®å€¤ã¨ã—ã¦
+     * è¨­å®šã—ã¾ã™ã€‚
      * 
      * TODO exception handling
      * 

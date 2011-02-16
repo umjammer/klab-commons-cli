@@ -17,8 +17,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * OptionsTest. 
  *
- * @author <a href="mailto:sano-n@klab.jp">Naohide Sano</a> (nsano)
- * @version 0.00 2009/05/31 nsano initial version <br>
+ * @author <a href="mailto:sano-n@klab.jp">Naohide Sano</a> (sano-n)
+ * @version 0.00 2009/05/31 sano-n initial version <br>
  */
 public class OptionsTest {
 

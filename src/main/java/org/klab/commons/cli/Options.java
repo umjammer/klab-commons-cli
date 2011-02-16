@@ -21,8 +21,8 @@ import vavi.beans.DefaultBinder;
  * コマンドライン引数を解析するプロバイダークラスと
  * 例外処理を行うクラス、代入を行うクラスを設定します。 
  *
- * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (nsano)
- * @version 0.00 080225 nsano initial version <br>
+ * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (sano-n)
+ * @version 0.00 080225 sano-n initial version <br>
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
