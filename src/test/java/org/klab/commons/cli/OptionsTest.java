@@ -262,6 +262,46 @@ System.err.println(option);
         assertEquals("4", test8.arg4);
         assertEquals("5", test8.arg);
     }
+
+    @Options
+    @HelpOption(option = "?", helpHandler = ExceptionHandler.class)
+    class Test9 {
+        @Option(argName = "sorter", description = "sort options", args = 4, option = "s", required = false)
+        @Binded(binder = S_Binder9.class)
+        String arg1;
+        String arg2;
+        String arg3;
+        String arg4;
+        @Argument(index = 0, required = true)
+        String arg;
+        boolean help;
+    }
+
+    public static class S_Binder9 implements Binder<Test9> {
+        public void bind(Test9 bean, String[] args, Context context) {
+            assertEquals(true, context.hasOption("s"));
+            assertTrue(args.length <= 4);
+            bean.arg1 = args.length > 0 ? args[0] : null;
+            bean.arg2 = args.length > 1 ? args[1] : null;
+            bean.arg3 = args.length > 2 ? args[2] : null;
+            bean.arg4 = args.length > 3 ? args[3] : null;
+        }
+    }
+
+    public static class ExceptionHandler implements Options.ExceptionHandler {
+        public void handleException(Context context) {
+            context.printHelp();
+            Test9.class.cast(context.getBean()).help = true;
+        }
+    }
+
+    @Test
+    public void test09() throws Exception {
+        String[] args = { "-s", "/x/path", "desc", "3", "4" };
+        Test9 test9 = new Test9();
+        Options.Util.bind(args, test9);
+        assertTrue(test9.help);
+    }
 }
 
 /* */

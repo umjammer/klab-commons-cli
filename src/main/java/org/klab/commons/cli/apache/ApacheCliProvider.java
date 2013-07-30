@@ -196,9 +196,9 @@ logger.debug(option.getArgName() + "[" + opt + "]: " + BeanUtil.getFieldValue(fi
                     String value = commandLine.getArgs()[index];
                     defaultBinder.bind(destBean, field, fieldClass, value, value);
                 }
-            } catch (IndexOutOfBoundsException e) {
-                if (requied) { // TODO check no argument
-                    helpHandler.handleException(new org.klab.commons.cli.Options.ExceptionHandler.Context(null, destBean) {
+            } catch (ArrayIndexOutOfBoundsException e) {
+                if (requied) {
+                    helpHandler.handleException(new org.klab.commons.cli.Options.ExceptionHandler.Context(e, destBean) {
                         public void printHelp() {
                             new HelpFormatter().printHelp(bean.getClass().getSimpleName(), options, true);
                         }

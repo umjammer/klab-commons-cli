@@ -21,7 +21,11 @@ public interface Binder<T> {
         public abstract boolean hasOption(String option);
     }
 
-    /** ここで代入を実装します。 */
+    /**
+     * ここで代入を実装します。
+     * 
+     * @throws ArrayIndexOutOfBoundsException 
+     */
     void bind(T bean, String[] args, Context context);
 }
 
