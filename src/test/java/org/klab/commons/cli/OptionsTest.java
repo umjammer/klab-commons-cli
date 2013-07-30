@@ -12,6 +12,7 @@ import org.apache.commons.cli.OptionBuilder;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -103,8 +104,8 @@ public class OptionsTest {
     }
 
     public static class X_Binder implements Binder<Test3> {
-        public void bind(Test3 bean, String arg, Context context) {
-            bean.string = arg.toUpperCase();
+        public void bind(Test3 bean, String[] args, Context context) {
+            bean.string = args[0].toUpperCase();
         }
     }
 
@@ -153,8 +154,8 @@ public class OptionsTest {
     }
 
     public static class A1_Binder implements Binder<Test5> {
-        public void bind(Test5 bean, String arg, Context context) {
-            bean.a1= new File(arg);
+        public void bind(Test5 bean, String[] args, Context context) {
+            bean.a1 = new File(args[0]);
         }
     }
 
@@ -193,12 +194,12 @@ System.err.println(option);
     }
 
     public static class X_Binder7 implements Binder<Test7> {
-        public void bind(Test7 bean, String arg, Context context) {
+        public void bind(Test7 bean, String[] args, Context context) {
             assertEquals(true, context.hasOption("x"));
             assertEquals(false, context.hasOption("y"));
             assertEquals(false, context.hasOption("yy"));
             assertEquals(false, context.hasOption("a"));
-            bean.string = arg.toUpperCase();
+            bean.string = args[0].toUpperCase();
         }
     }
 
@@ -208,6 +209,58 @@ System.err.println(option);
         Test7 test7 = new Test7();
         Options.Util.bind(args, test7);
         assertEquals("STRING", test7.string);
+    }
+
+    @Options
+    class Test8 {
+        @Option(argName = "sorter", description = "sort options", args = 4, option = "s", required = false)
+        @Binded(binder = S_Binder8.class)
+        String arg1;
+        String arg2;
+        String arg3;
+        String arg4;
+        @Argument(index = 0)
+        String arg;
+    }
+
+    public static class S_Binder8 implements Binder<Test8> {
+        public void bind(Test8 bean, String[] args, Context context) {
+            assertEquals(true, context.hasOption("s"));
+            assertTrue(args.length <= 4);
+//for (String arg : args) {
+// System.err.println(arg);
+//}
+            bean.arg1 = args.length > 0 ? args[0] : null;
+            bean.arg2 = args.length > 1 ? args[1] : null;
+            bean.arg3 = args.length > 2 ? args[2] : null;
+            bean.arg4 = args.length > 3 ? args[3] : null;
+        }
+    }
+
+    @Test
+    public void test08() throws Exception {
+        String[] args = { "-s", "/x/path", "desc", "datetime", "$1 xpath('/y/path/text()')" };
+        Test8 test8 = new Test8();
+        Options.Util.bind(args, test8);
+        assertEquals("/x/path", test8.arg1);
+        assertEquals("desc", test8.arg2);
+        assertEquals("datetime", test8.arg3);
+        assertEquals("$1 xpath('/y/path/text()')", test8.arg4);
+
+        String[] args2 = { "-s", "/x/path", "desc" };
+        Options.Util.bind(args2, test8);
+        assertEquals("/x/path", test8.arg1);
+        assertEquals("desc", test8.arg2);
+        assertEquals(null, test8.arg3);
+        assertEquals(null, test8.arg4);
+
+        String[] args3 = { "-s", "/x/path", "desc", "3", "4", "5" };
+        Options.Util.bind(args3, test8);
+        assertEquals("/x/path", test8.arg1);
+        assertEquals("desc", test8.arg2);
+        assertEquals("3", test8.arg3);
+        assertEquals("4", test8.arg4);
+        assertEquals("5", test8.arg);
     }
 }
 

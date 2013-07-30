@@ -22,7 +22,7 @@ public interface Binder<T> {
     }
 
     /** ここで代入を実装します。 */
-    void bind(T bean, String arg, Context context);
+    void bind(T bean, String[] args, Context context);
 }
 
 /* */

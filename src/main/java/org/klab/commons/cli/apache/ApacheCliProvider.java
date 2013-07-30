@@ -161,7 +161,11 @@ public class ApacheCliProvider extends CliProvider {
             if (commandLine.hasOption(opt)) {
                 if (Binded.Util.isBinded(field)) {
                     Binder<T> binder = Binded.Util.getBinder(field);
-                    binder.bind(destBean, commandLine.getOptionValue(opt), binderContext);
+                    if (option.getArgs() > 1) {
+                        binder.bind(destBean, commandLine.getOptionValues(opt), binderContext);
+                    } else {
+                        binder.bind(destBean, new String[] { commandLine.getOptionValue(opt) }, binderContext);
+                    }
                 } else {
                     Class<?> fieldClass = field.getType();
                     String value = commandLine.getOptionValue(opt); // TODO check args
@@ -181,14 +185,27 @@ logger.debug(option.getArgName() + "[" + opt + "]: " + BeanUtil.getFieldValue(fi
             }
 
             int index = org.klab.commons.cli.Argument.Util.getIndex(field);
-            if (Binded.Util.isBinded(field)) {
-                Binder<T> binder = Binded.Util.getBinder(field);
+            boolean requied = org.klab.commons.cli.Argument.Util.isRequred(field);
+            try {
+                if (Binded.Util.isBinded(field)) {
+                    Binder<T> binder = Binded.Util.getBinder(field);
 //logger.debug("args[" + index + "]: " + commandLine.getArgs()[index]);
-                binder.bind(destBean, commandLine.getArgs()[index], binderContext);
-            } else {
-                Class<?> fieldClass = field.getType();
-                String value = commandLine.getArgs()[index];
-                defaultBinder.bind(destBean, field, fieldClass, value, value);
+                    binder.bind(destBean, new String[] { commandLine.getArgs()[index] }, binderContext);
+                } else {
+                    Class<?> fieldClass = field.getType();
+                    String value = commandLine.getArgs()[index];
+                    defaultBinder.bind(destBean, field, fieldClass, value, value);
+                }
+            } catch (IndexOutOfBoundsException e) {
+                if (requied) { // TODO check no argument
+                    helpHandler.handleException(new org.klab.commons.cli.Options.ExceptionHandler.Context(null, destBean) {
+                        public void printHelp() {
+                            new HelpFormatter().printHelp(bean.getClass().getSimpleName(), options, true);
+                        }
+                    });
+                } else {
+logger.debug("args[" + index + "]: not required, ignored");
+                }
             }
         }
     }
