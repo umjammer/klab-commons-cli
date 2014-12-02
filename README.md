@@ -7,9 +7,9 @@ This is wrapper of Apache Commons CLI.
 
 # Usage
 
-## Before
+* Before
 
-```
+```Java
         Options options = new Options();
 
         options.addOption(OptionBuilder
@@ -41,9 +41,9 @@ This is wrapper of Apache Commons CLI.
 ```
 
 
-## After
+* After
 
-```
+```Java
 @Options
 public class Foo {
 
