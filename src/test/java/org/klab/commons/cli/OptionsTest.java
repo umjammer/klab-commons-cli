@@ -99,7 +99,7 @@ public class OptionsTest {
     @Options
     class Test3 {
         @Option(argName = "String", description = "string value", args = 1, option = "x", required = false)
-        @Binded(binder = X_Binder.class)
+        @Bound(binder = X_Binder.class)
         String string;
     }
 
@@ -147,7 +147,7 @@ public class OptionsTest {
         @Argument(index = 0)
         String a0;
         @Argument(index = 1)
-        @Binded(binder = A1_Binder.class)
+        @Bound(binder = A1_Binder.class)
         File a1;
         @Argument(index = 2)
         File a2;
@@ -186,10 +186,10 @@ System.err.println(option);
     @Options
     class Test7 {
         @Option(argName = "String", description = "string value", args = 1, option = "x", required = false)
-        @Binded(binder = X_Binder7.class)
+        @Bound(binder = X_Binder7.class)
         String string;
         @Option(argName = "a", description = "int value", args = 1, option = "a", required = false)
-        @Binded(binder = X_Binder7.class)
+        @Bound(binder = X_Binder7.class)
         int a;
     }
 
@@ -214,7 +214,7 @@ System.err.println(option);
     @Options
     class Test8 {
         @Option(argName = "sorter", description = "sort options", args = 4, option = "s", required = false)
-        @Binded(binder = S_Binder8.class)
+        @Bound(binder = S_Binder8.class)
         String arg1;
         String arg2;
         String arg3;
@@ -267,7 +267,7 @@ System.err.println(option);
     @HelpOption(option = "?", helpHandler = ExceptionHandler.class)
     class Test9 {
         @Option(argName = "sorter", description = "sort options", args = 4, option = "s", required = false)
-        @Binded(binder = S_Binder9.class)
+        @Bound(binder = S_Binder9.class)
         String arg1;
         String arg2;
         String arg3;

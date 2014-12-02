@@ -22,7 +22,7 @@ import org.apache.commons.cli.PosixParser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.klab.commons.cli.Binded;
+import org.klab.commons.cli.Bound;
 import org.klab.commons.cli.Binder;
 import org.klab.commons.cli.HelpOption;
 import org.klab.commons.cli.spi.CliProvider;
@@ -112,7 +112,7 @@ public class ApacheCliProvider extends CliProvider {
             options.addOption(option);
 
             //
-            if (Binded.Util.isBinded(field)) {
+            if (Bound.Util.isBinded(field)) {
                 bindedFields.put(field, option);
             } else {
                 optionFields.put(field, option);
@@ -159,8 +159,8 @@ public class ApacheCliProvider extends CliProvider {
                 opt = option.getOpt();
             }
             if (commandLine.hasOption(opt)) {
-                if (Binded.Util.isBinded(field)) {
-                    Binder<T> binder = Binded.Util.getBinder(field);
+                if (Bound.Util.isBinded(field)) {
+                    Binder<T> binder = Bound.Util.getBinder(field);
                     if (option.getArgs() > 1) {
                         binder.bind(destBean, commandLine.getOptionValues(opt), binderContext);
                     } else {
@@ -187,8 +187,8 @@ logger.debug(option.getArgName() + "[" + opt + "]: " + BeanUtil.getFieldValue(fi
             int index = org.klab.commons.cli.Argument.Util.getIndex(field);
             boolean requied = org.klab.commons.cli.Argument.Util.isRequred(field);
             try {
-                if (Binded.Util.isBinded(field)) {
-                    Binder<T> binder = Binded.Util.getBinder(field);
+                if (Bound.Util.isBinded(field)) {
+                    Binder<T> binder = Bound.Util.getBinder(field);
 //logger.debug("args[" + index + "]: " + commandLine.getArgs()[index]);
                     binder.bind(destBean, new String[] { commandLine.getArgs()[index] }, binderContext);
                 } else {
