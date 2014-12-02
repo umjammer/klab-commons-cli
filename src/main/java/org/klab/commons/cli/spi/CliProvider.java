@@ -20,10 +20,10 @@ import vavi.beans.DefaultBinder;
 public abstract class CliProvider {
 
     /** */
-    protected ExceptionHandler exceptionHandler;
+    protected ExceptionHandler<?> exceptionHandler;
     
     /** */
-    public void setExceptionHandler(ExceptionHandler exceptionHandler) {
+    public void setExceptionHandler(ExceptionHandler<?> exceptionHandler) {
         this.exceptionHandler = exceptionHandler;
     }
 

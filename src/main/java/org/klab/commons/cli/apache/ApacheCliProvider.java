@@ -44,7 +44,7 @@ public class ApacheCliProvider extends CliProvider {
     private static Log logger = LogFactory.getLog(ApacheCliProvider.class); 
 
     /* */
-    @SuppressWarnings("static-access")
+    @SuppressWarnings({ "static-access", "unchecked", "rawtypes" })
     public <T> void bind(String[] sourceArgs, T destBean) {
 
         //
@@ -62,7 +62,7 @@ public class ApacheCliProvider extends CliProvider {
         final Options options = new Options();
 
         //
-        org.klab.commons.cli.Options.ExceptionHandler helpHandler = null;
+        org.klab.commons.cli.Options.ExceptionHandler<?> helpHandler = null;
         String helpOption = null;
         org.klab.commons.cli.HelpOption helpOptionAnnotation = destBean.getClass().getAnnotation(org.klab.commons.cli.HelpOption.class);
         if (helpOptionAnnotation != null) {

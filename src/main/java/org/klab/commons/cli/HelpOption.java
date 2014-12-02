@@ -34,16 +34,17 @@ public @interface HelpOption {
     String option();
 
     /** */
+    @SuppressWarnings("rawtypes")
     Class<? extends ExceptionHandler> helpHandler() default ExitExceptionHandler.class;
 
     /** */
     class Util {
 
         /** */
-        public static ExceptionHandler getExceptionHandler(Object bean) {
+        public static ExceptionHandler<?> getExceptionHandler(Object bean) {
             try {
                 HelpOption option = bean.getClass().getAnnotation(HelpOption.class);
-                ExceptionHandler exceptionHandler = option.helpHandler().newInstance();
+                ExceptionHandler<?> exceptionHandler = option.helpHandler().newInstance();
                 return exceptionHandler;
             } catch (Exception e) {
                 throw (RuntimeException) new IllegalStateException().initCause(e);

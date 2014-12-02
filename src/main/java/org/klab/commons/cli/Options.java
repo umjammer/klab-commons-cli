@@ -32,6 +32,7 @@ public @interface Options {
     Class<? extends CliProvider> cliProvider() default org.klab.commons.cli.apache.ApacheCliProvider.class;
 
     /** 例外処理クラス */
+    @SuppressWarnings("rawtypes")
     Class<? extends ExceptionHandler> exceptionHandler() default ExitExceptionHandler.class;
 
     /** 代入処理クラス */
@@ -41,12 +42,12 @@ public @interface Options {
     String option() default "org.apache.commons.cli.BasicParser";
 
     /** コマンドライン解析中の例外処理を記述するクラスです。 */
-    public interface ExceptionHandler {
+    public interface ExceptionHandler<T> {
 
         /** コマンドライン解析中の例外の情報を保持するクラスです。 */
-        public abstract class Context {
+        public abstract class Context<T> {
             /** */
-            public Context(Exception exception, Object bean) {
+            public Context(Exception exception, T bean) {
                 this.exception = exception;
                 this.bean = bean;
             }
@@ -55,7 +56,7 @@ public @interface Options {
             protected Exception exception;
 
             /** {@link Options} を設定した bean */
-            protected Object bean;
+            protected T bean;
 
             /** */
             public Exception getException() {
@@ -63,7 +64,7 @@ public @interface Options {
             }
 
             /** */
-            public Object getBean() {
+            public T getBean() {
                 return bean;
             }
 
@@ -72,7 +73,7 @@ public @interface Options {
         }
 
         /** 例外処理を行います。 */
-        void handleException(Context context);
+        void handleException(Context<T> context);
     }
 
     /** コマンドライン引数を処理するユーティリティです。 */
@@ -90,10 +91,10 @@ public @interface Options {
         }
 
         /** */
-        public static ExceptionHandler getExceptionHandler(Object bean) {
+        public static ExceptionHandler<?> getExceptionHandler(Object bean) {
             try {
                 Options options = bean.getClass().getAnnotation(Options.class);
-                ExceptionHandler exceptionHandler = options.exceptionHandler().newInstance();
+                ExceptionHandler<?> exceptionHandler = options.exceptionHandler().newInstance();
                 return exceptionHandler;
             } catch (Exception e) {
                 throw (RuntimeException) new IllegalStateException().initCause(e);
@@ -128,7 +129,7 @@ public @interface Options {
                 throw new IllegalArgumentException("bean is not annotated with @Options");
             }
             CliProvider cliProvider = Options.Util.getCliProvider(destBean);
-            ExceptionHandler exceptionHandler = Options.Util.getExceptionHandler(destBean);
+            ExceptionHandler<?> exceptionHandler = Options.Util.getExceptionHandler(destBean);
             DefaultBinder defaultBinder = Options.Util.getDefaultBinder(destBean);
             String option = Options.Util.getOption(destBean);
 

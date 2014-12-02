@@ -125,10 +125,10 @@ public class OptionsTest {
         boolean help;
     }
 
-    public static class HelpHandler implements Options.ExceptionHandler {
-        public void handleException(Context context) {
+    public static class HelpHandler implements Options.ExceptionHandler<Test4> {
+        public void handleException(Context<Test4> context) {
             context.printHelp();
-            Test4.class.cast(context.getBean()).help = true;
+            context.getBean().help = true;
         }
     }
 
@@ -288,10 +288,10 @@ System.err.println(option);
         }
     }
 
-    public static class ExceptionHandler implements Options.ExceptionHandler {
-        public void handleException(Context context) {
+    public static class ExceptionHandler implements Options.ExceptionHandler<Test9> {
+        public void handleException(Context<Test9> context) {
             context.printHelp();
-            Test9.class.cast(context.getBean()).help = true;
+            context.getBean().help = true;
         }
     }
 
