@@ -18,14 +18,14 @@ import org.klab.commons.cli.Options.ExceptionHandler;
  * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (sano-n)
  * @version 0.00 080227 sano-n initial version <br>
  */
-public class ExceptionExceptionHandler implements ExceptionHandler {
+public class ExceptionExceptionHandler<T> implements ExceptionHandler<T> {
     /** */
     private static Log logger = LogFactory.getLog(ExceptionExceptionHandler.class); 
 
     /**
      * @throws IllegalStateException cause is e 
      */
-    public void handleException(Context context) {
+    public void handleException(Context<T> context) {
 logger.debug("ExceptionHandler", context.exception);
         context.printHelp();
         throw (RuntimeException) new IllegalStateException().initCause(context.exception);

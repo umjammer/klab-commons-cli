@@ -18,12 +18,12 @@ import org.klab.commons.cli.Options.ExceptionHandler;
  * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (sano-n)
  * @version 0.00 080227 sano-n initial version <br>
  */
-public class ExitExceptionHandler implements ExceptionHandler {
+public class ExitExceptionHandler<T> implements ExceptionHandler<T> {
     /** */
     private static Log logger = LogFactory.getLog(ExitExceptionHandler.class); 
 
     /* */
-    public void handleException(Context context) {
+    public void handleException(Context<T> context) {
 logger.debug("ExceptionHandler", context.exception);
         context.printHelp();
         System.exit(1);

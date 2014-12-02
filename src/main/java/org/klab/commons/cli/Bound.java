@@ -24,7 +24,7 @@ import java.lang.reflect.Field;
  */
 @Target({ ElementType.FIELD, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Binded {
+public @interface Bound {
 
     /**
      * フィールドに値を代入する実装クラス
@@ -43,17 +43,17 @@ public @interface Binded {
 
         /** */
         public static boolean isBinded(Field field) {
-            return field.getAnnotation(Binded.class) != null;
+            return field.getAnnotation(Bound.class) != null;
         }
 
         /**
          * 
-         * @param field @{@link Binded} annotated field.
-         * @throws NullPointerException when field is not annotated by {@link Binded}
+         * @param field @{@link Bound} annotated field.
+         * @throws NullPointerException when field is not annotated by {@link Bound}
          */
         public static <T> Binder<T> getBinder(Field field) {
             try {
-                Binded binded = field.getAnnotation(Binded.class);
+                Bound binded = field.getAnnotation(Bound.class);
                 @SuppressWarnings("unchecked")
                 Binder<T> binder = (Binder<T>) binded.binder().newInstance();
                 return binder; 

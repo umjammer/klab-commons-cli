@@ -26,6 +26,9 @@ public @interface Argument {
     /** 順番 */
     int index();
 
+    /** 必須かどうか */
+    boolean required() default false;
+
     /**
      * TODO アノテーションがメソッド指定の場合 
      */
@@ -35,6 +38,12 @@ public @interface Argument {
         public static int getIndex(Field field) {
             Argument argument = field.getAnnotation(Argument.class);
             return argument.index();
+        }
+
+        /** */
+        public static boolean isRequred(Field field) {
+            Argument argument = field.getAnnotation(Argument.class);
+            return argument.required();
         }
     }
 }
