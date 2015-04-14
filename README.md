@@ -3,7 +3,7 @@ klab-commons-cli
 
 Command Line Interface Library with Annotation
 
-This is the wrapper of Apache Commons CLI.
+This is the wrapper of [Apache Commons CLI](http://commons.apache.org/proper/commons-cli/).
 
 # Usage
 
