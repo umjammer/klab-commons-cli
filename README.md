@@ -3,7 +3,7 @@ klab-commons-cli
 
 Command Line Interface Library with Annotation
 
-This is wrapper of Apache Commons CLI.
+This is the wrapper of Apache Commons CLI.
 
 # Usage
 
@@ -63,4 +63,4 @@ public class Foo {
 
 # Depends
 
-* http://code.google.com/p/vavi-commons/source/browse/#svn/trunk/vavi-commons
+* https://github.com/umjammer/vavi-commons/tree/master/vavi-commons
