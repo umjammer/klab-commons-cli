@@ -1,6 +1,8 @@
 klab-commons-cli
 ================
 
+[![License](https://img.shields.io/badge/License-APACHE%20LICENSE%2C%20VERSION%202.0-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+
 Command Line Interface Library with Annotation
 
 This is the wrapper of [Apache Commons CLI](http://commons.apache.org/proper/commons-cli/).
