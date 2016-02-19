@@ -57,7 +57,7 @@ public class ApacheCliProvider extends CliProvider {
 
         //
         Map<Field, Option> optionFields = new LinkedHashMap<Field, Option>();
-        Map<Field, Option> bindedFields = new HashMap<Field, Option>();
+        Map<Field, Option> boundFields = new HashMap<Field, Option>();
 
         final Options options = new Options();
 
@@ -112,15 +112,15 @@ public class ApacheCliProvider extends CliProvider {
             options.addOption(option);
 
             //
-            if (Bound.Util.isBinded(field)) {
-                bindedFields.put(field, option);
+            if (Bound.Util.isBound(field)) {
+                boundFields.put(field, option);
             } else {
                 optionFields.put(field, option);
             }
 //logger.debug("@Option: " + field.getName() + ", " + option.getOpt());
         }
 
-        optionFields.putAll(bindedFields);
+        optionFields.putAll(boundFields);
 //logger.debug("★★★★ options: " + optionFields.size());
 
         CommandLine commandLine = null;
@@ -159,7 +159,7 @@ public class ApacheCliProvider extends CliProvider {
                 opt = option.getOpt();
             }
             if (commandLine.hasOption(opt)) {
-                if (Bound.Util.isBinded(field)) {
+                if (Bound.Util.isBound(field)) {
                     Binder<T> binder = Bound.Util.getBinder(field);
                     if (option.getArgs() > 1) {
                         binder.bind(destBean, commandLine.getOptionValues(opt), binderContext);
@@ -187,7 +187,7 @@ logger.debug(option.getArgName() + "[" + opt + "]: " + BeanUtil.getFieldValue(fi
             int index = org.klab.commons.cli.Argument.Util.getIndex(field);
             boolean requied = org.klab.commons.cli.Argument.Util.isRequred(field);
             try {
-                if (Bound.Util.isBinded(field)) {
+                if (Bound.Util.isBound(field)) {
                     Binder<T> binder = Bound.Util.getBinder(field);
 //logger.debug("args[" + index + "]: " + commandLine.getArgs()[index]);
                     binder.bind(destBean, new String[] { commandLine.getArgs()[index] }, binderContext);

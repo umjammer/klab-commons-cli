@@ -42,7 +42,7 @@ public @interface Bound {
     static class Util {
 
         /** */
-        public static boolean isBinded(Field field) {
+        public static boolean isBound(Field field) {
             return field.getAnnotation(Bound.class) != null;
         }
 
@@ -53,9 +53,9 @@ public @interface Bound {
          */
         public static <T> Binder<T> getBinder(Field field) {
             try {
-                Bound binded = field.getAnnotation(Bound.class);
+                Bound bound = field.getAnnotation(Bound.class);
                 @SuppressWarnings("unchecked")
-                Binder<T> binder = (Binder<T>) binded.binder().newInstance();
+                Binder<T> binder = (Binder<T>) bound.binder().newInstance();
                 return binder; 
             } catch (Exception e) {
                 throw (RuntimeException) new IllegalStateException().initCause(e);

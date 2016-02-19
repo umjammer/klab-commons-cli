@@ -19,10 +19,12 @@
 
   <property name="dir.src" value="src/main/java" />
   <property name="dir.build" value="target/classes" />
+  <xmlproperty file="pom.xml" />
+  <property name="ivy.file" value="${ivy.cache}/${project.groupId}/${project.art
+ifactId}/ivy-${project.version}.xml" />
 
   <!-- クラスパスの定義 -->
   <path id="project.class.path">
-    <pathelement location="${dir.build}" />
     <fileset dir="lib">
       <include name="*.jar" />
     </fileset>
@@ -32,10 +34,15 @@
 
   <!-- clean -->
   <target name="clean" description="ビルド環境のクリア">
-    <delete dir="${dir.build}" />
     <delete>
       <fileset dir="lib">
         <include name="*.jar" />
+      </fileset>
+      <fileset dir="${dir.build}">
+        <include name="**/*" />
+      </fileset>
+      <fileset dir="target/test-classes">
+        <include name="**/*" />
       </fileset>
     </delete>
   </target>
@@ -43,9 +50,10 @@
   <!-- prepare -->
   <target name="prepare" description="ビルド環境の準備">
     <mkdir dir="${dir.build}" />
+    <mkdir dir="target/test-classes" />
     <ivy:settings file="ivy-settings.xml" />
-    <ivy:convertpom pomFile="pom.xml" ivyFile="ivy.xml" />
-    <ivy:retrieve />
+    <ivy:convertpom pomFile="pom.xml" ivyFile="${ivy.file}" />
+    <ivy:retrieve file="${ivy.file}" />
   </target>
 
   <!-- javac -->
@@ -55,13 +63,37 @@
       <include name="**/*.java" />
       <src path="${dir.src}" />
     </javac>
+
+    <copy todir="${dir.build}">
+      <fileset dir="src/main/resources">
+        <include name="**/*" />
+      </fileset>
+    </copy>
+
+    <javac debug="on" encoding="${encoding}" destdir="target/test-classes">
+      <classpath>
+        <path refid="project.class.path" />
+        <pathelement location="${dir.build}" />
+      </classpath>
+      <include name="**/*.java" />
+      <src path="src/test/java" />
+    </javac>
+
+    <copy todir="target/test-classes">
+      <fileset dir="src/test/resources">
+        <include name="**/*" />
+      </fileset>
+    </copy>
   </target>
 
   <!-- run -->
   <target name="run" depends="compile" description="load project file">
     <java classname="jp.klab.imagetool.Main" fork="yes">
       <jvmarg value="-Dfile.encoding=${file.encoding}" />
-      <classpath refid="project.class.path" />
+      <classpath>
+        <pathelement location="${dir.build}" />
+        <path refid="project.class.path" />
+      </classpath>
     </java>
   </target>
 
