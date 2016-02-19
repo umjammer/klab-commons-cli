@@ -60,7 +60,3 @@ public class Foo {
         :
     }
 ```
-
-# Depends
-
-* http://code.google.com/p/vavi-commons/source/browse/#svn/trunk/vavi-commons
