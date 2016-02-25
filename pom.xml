@@ -6,8 +6,8 @@
   <packaging>jar</packaging>
   <version>1.2.4</version>
   <name>klab-commons-cli</name>
-  <description>CLI Annotation Laibrary</description>
-  <url>http://www.klab.jp</url>
+  <description>KLab CLI Annotation Laibrary</description>
+  <url>https://github.com/umjammer/klab-commons-cli</url>
   <inceptionYear>2008</inceptionYear>
   <distributionManagement>
     <repository>
@@ -53,10 +53,11 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
+          <source>1.8</source>
+          <target>1.8</target>
           <encoding>UTF-8</encoding>
         </configuration>
+        <version>3.3</version>
       </plugin>
     </plugins>
   </build>
@@ -96,16 +97,19 @@
   		<version>1.1.1</version>
   		<optional>false</optional>
   	</dependency>
-  	<dependency>
-  		<groupId>log4j</groupId>
-  		<artifactId>log4j</artifactId>
-  		<version>1.2.15</version>
-  		<scope>test</scope>
-  		<optional>false</optional>
-  	</dependency>
   </dependencies>
   <properties>
     <!-- github server corresponds to entry in ~/.m2/settings.xml -->
     <github.global.server>github</github.global.server>
   </properties>
+  <scm>
+    <url>https://github.com/umjammer/klab-commons-cli</url>
+  </scm>
+  <issueManagement>
+    <url>https://github.com/umjammer/klab-commons-cli/issues</url>
+  </issueManagement>
+  <organization>
+    <name>KLab Inc.</name>
+    <url>http://www.klab.com</url>
+  </organization>
 </project>
