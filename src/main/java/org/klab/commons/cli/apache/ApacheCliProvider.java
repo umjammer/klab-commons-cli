@@ -56,8 +56,8 @@ public class ApacheCliProvider extends CliProvider {
         }
 
         //
-        Map<Field, Option> optionFields = new LinkedHashMap<Field, Option>();
-        Map<Field, Option> boundFields = new HashMap<Field, Option>();
+        Map<Field, Option> optionFields = new LinkedHashMap<>();
+        Map<Field, Option> boundFields = new HashMap<>();
 
         final Options options = new Options();
 

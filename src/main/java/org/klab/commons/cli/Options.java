@@ -86,7 +86,7 @@ public @interface Options {
                 CliProvider commandLineParser = options.cliProvider().newInstance();
                 return commandLineParser;
             } catch (Exception e) {
-                throw (RuntimeException) new IllegalStateException().initCause(e);
+                throw new IllegalStateException(e);
             }
         }
 
@@ -97,7 +97,7 @@ public @interface Options {
                 ExceptionHandler<?> exceptionHandler = options.exceptionHandler().newInstance();
                 return exceptionHandler;
             } catch (Exception e) {
-                throw (RuntimeException) new IllegalStateException().initCause(e);
+                throw new IllegalStateException(e);
             }
         }
 
@@ -108,7 +108,7 @@ public @interface Options {
                 DefaultBinder defaultBinder = options.defaultBinder().newInstance();
                 return defaultBinder;
             } catch (Exception e) {
-                throw (RuntimeException) new IllegalStateException().initCause(e);
+                throw new IllegalStateException(e);
             }
         }
 
