@@ -1,7 +1,7 @@
 klab-commons-cli
 ================
 
-[![License](https://img.shields.io/badge/License-APACHE%20LICENSE%2C%20VERSION%202.0-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![License](https://img.shields.io/badge/License-APACHE%20LICENSE%2C%20VERSION%202.0-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0) [![Release](https://jitpack.io/v/umjammer/klab-commons-cli.svg)](https://jitpack.io/#umjammer/klab-commons-cli)
 
 Command Line Interface Library with Annotation
 
