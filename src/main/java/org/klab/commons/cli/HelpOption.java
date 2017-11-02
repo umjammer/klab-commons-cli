@@ -47,7 +47,7 @@ public @interface HelpOption {
                 ExceptionHandler<?> exceptionHandler = option.helpHandler().newInstance();
                 return exceptionHandler;
             } catch (Exception e) {
-                throw (RuntimeException) new IllegalStateException().initCause(e);
+                throw new IllegalStateException(e);
             }
         }
     }

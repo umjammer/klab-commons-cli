@@ -28,8 +28,11 @@ import vavi.beans.DefaultBinder;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Options {
 
-    /** プロバイダークラス */
-    Class<? extends CliProvider> cliProvider() default org.klab.commons.cli.apache.ApacheCliProvider.class;
+    /**
+     * Specifies a provider class. If not specified, the default provider will be used.
+     * The default provider class is written in the file <code>META-INF/services/org.commons.cli.spi.CliProveder</code>
+     */
+    Class<? extends CliProvider> cliProvider() default org.klab.commons.cli.spi.CliProvider.class;
 
     /** 例外処理クラス */
     @SuppressWarnings("rawtypes")
@@ -39,7 +42,7 @@ public @interface Options {
     Class<? extends DefaultBinder> defaultBinder() default AdvancedBinder.class;
 
     /** {@link CliProvider} に依って用途は決まります。 */
-    String option() default "org.apache.commons.cli.BasicParser";
+    String option() default "";
 
     /** コマンドライン解析中の例外処理を記述するクラスです。 */
     public interface ExceptionHandler<T> {
@@ -79,14 +82,23 @@ public @interface Options {
     /** コマンドライン引数を処理するユーティリティです。 */
     class Util {
 
-        /** */
+        private Util() {
+        }
+
+        /**
+         *
+         */
         public static CliProvider getCliProvider(Object bean) {
             try {
                 Options options = bean.getClass().getAnnotation(Options.class);
-                CliProvider commandLineParser = options.cliProvider().newInstance();
-                return commandLineParser;
+                Class<? extends CliProvider> provider = options.cliProvider();
+                if (provider.equals(org.klab.commons.cli.spi.CliProvider.class)) {
+                    return CliProvider.Util.defaultService();
+                } else {
+                    return provider.newInstance();
+                }
             } catch (Exception e) {
-                throw (RuntimeException) new IllegalStateException().initCause(e);
+                throw new IllegalStateException(e);
             }
         }
 
@@ -97,7 +109,7 @@ public @interface Options {
                 ExceptionHandler<?> exceptionHandler = options.exceptionHandler().newInstance();
                 return exceptionHandler;
             } catch (Exception e) {
-                throw (RuntimeException) new IllegalStateException().initCause(e);
+                throw new IllegalStateException(e);
             }
         }
 
@@ -108,7 +120,7 @@ public @interface Options {
                 DefaultBinder defaultBinder = options.defaultBinder().newInstance();
                 return defaultBinder;
             } catch (Exception e) {
-                throw (RuntimeException) new IllegalStateException().initCause(e);
+                throw new IllegalStateException(e);
             }
         }
 
@@ -120,7 +132,6 @@ public @interface Options {
 
         /**
          * POJO destBean にコマンドライン引数 sourceArgs を設定します。
-         * @return UTF-8 URL encoded 
          */
         public static void bind(String[] sourceArgs, Object destBean) {
             //
@@ -128,6 +139,7 @@ public @interface Options {
             if (optionsAnnotation == null) {
                 throw new IllegalArgumentException("bean is not annotated with @Options");
             }
+
             CliProvider cliProvider = Options.Util.getCliProvider(destBean);
             ExceptionHandler<?> exceptionHandler = Options.Util.getExceptionHandler(destBean);
             DefaultBinder defaultBinder = Options.Util.getDefaultBinder(destBean);

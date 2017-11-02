@@ -50,14 +50,17 @@ public class ApacheCliProvider extends CliProvider {
         //
         CommandLineParser commandLineParser;
         try {
+            if (option.isEmpty()) {
+                option = "org.apache.commons.cli.BasicParser";
+            }
             commandLineParser = (CommandLineParser) Class.forName(option).newInstance();
         } catch (Exception e) {
-            throw new IllegalStateException(e);
+            throw new IllegalArgumentException(e);
         }
 
         //
-        Map<Field, Option> optionFields = new LinkedHashMap<Field, Option>();
-        Map<Field, Option> boundFields = new HashMap<Field, Option>();
+        Map<Field, Option> optionFields = new LinkedHashMap<>();
+        Map<Field, Option> boundFields = new HashMap<>();
 
         final Options options = new Options();
 
@@ -76,7 +79,7 @@ public class ApacheCliProvider extends CliProvider {
             }
             options.addOption(option);
         }
-        
+
         //
         for (Field field : destBean.getClass().getDeclaredFields()) {
 //logger.debug("field: " + field.getName());
@@ -107,6 +110,9 @@ public class ApacheCliProvider extends CliProvider {
             if (optionAnnotation.argName().length() > 0) {
                 option.setArgName(optionAnnotation.argName());
             }
+            if (optionAnnotation.valueSeparator() != '-') {
+                option.setValueSeparator(optionAnnotation.valueSeparator());
+            }
             option.setRequired(optionAnnotation.required());
 
             options.addOption(option);
@@ -132,6 +138,7 @@ public class ApacheCliProvider extends CliProvider {
                     new HelpFormatter().printHelp(bean.getClass().getSimpleName(), options, true);
                 }
             });
+            return;
         }
 
         if (helpOption != null && commandLine.hasOption(helpOption)) {
@@ -148,7 +155,7 @@ public class ApacheCliProvider extends CliProvider {
                 return commandLineForBinder.hasOption(option);
             }
         };
-        
+
         for (Field field : optionFields.keySet()) {
             Option option = optionFields.get(field);
 //logger.debug("@Option: " + field.getName() + ", " + option.getOpt() + ", " + option.getLongOpt());

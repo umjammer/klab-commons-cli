@@ -58,7 +58,7 @@ public @interface Bound {
                 Binder<T> binder = (Binder<T>) bound.binder().newInstance();
                 return binder; 
             } catch (Exception e) {
-                throw (RuntimeException) new IllegalStateException().initCause(e);
+                throw new IllegalStateException(e);
             }
         }
     }

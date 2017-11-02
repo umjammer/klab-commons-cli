@@ -264,7 +264,7 @@ System.err.println(option);
     }
 
     @Options
-    @HelpOption(option = "?", helpHandler = ExceptionHandler.class)
+    @HelpOption(option = "?", description="print this help", helpHandler = ExceptionHandler9.class)
     class Test9 {
         @Option(argName = "sorter", description = "sort options", args = 4, option = "s", required = false)
         @Bound(binder = S_Binder9.class)
@@ -288,7 +288,7 @@ System.err.println(option);
         }
     }
 
-    public static class ExceptionHandler implements Options.ExceptionHandler<Test9> {
+    public static class ExceptionHandler9 implements Options.ExceptionHandler<Test9> {
         public void handleException(Context<Test9> context) {
             context.printHelp();
             context.getBean().help = true;
@@ -301,6 +301,32 @@ System.err.println(option);
         Test9 test9 = new Test9();
         Options.Util.bind(args, test9);
         assertTrue(test9.help);
+    }
+
+    @Options(exceptionHandler = ExceptionHandler10.class) // default exceptionHandler will call System.exit(1)
+    class Test10 {
+        @Option(argName = "boolean", description = "boolean value", option = "b")
+        boolean b;
+    }
+
+    /** avoiding System.exit() */
+    public static class ExceptionHandler10 implements Options.ExceptionHandler<Test10> {
+        public void handleException(Context<Test10> context) {
+            context.printHelp();
+        }
+    }
+
+    @Test
+    public void test10() throws Exception {
+        String[] args = { "-b" };
+        Test10 test10 = new Test10();
+        Options.Util.bind(args, test10);
+        assertTrue(test10.b);
+
+        String[] args2 = { "-a" };
+        test10 = new Test10();
+        Options.Util.bind(args2, test10);
+        assertTrue(!test10.b);
     }
 }
 
