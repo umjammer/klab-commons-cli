@@ -7,91 +7,51 @@
 <!--                                                                        -->
 <!-- klab-commons-cli                                                       -->
 <!--                                                                        -->
-<!-- @author	Naohide Sano                                                -->
-<!-- @version	0.00	090128	nsano	initial version                     -->
+<!-- @author Naohide Sano                                                   -->
+<!-- @version 0.00 090128 nsano initial version                             -->
 <!--                                                                        -->
 <!-- ////////////////////////////////////////////////////////////////////// -->
 
-<project name="klab-commons-cli" default="compile" basedir="."
-	     xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="klab-commons-cli" default="prepare" basedir="."
+         xmlns:artifact="urn:maven-artifact-ant">
 
-  <property file="local.properties" />
-
-  <property name="dir.src" value="src/main/java" />
-  <property name="dir.build" value="target/classes" />
-  <xmlproperty file="pom.xml" />
-  <property name="ivy.file" value="${ivy.cache}/${project.groupId}/${project.art
-ifactId}/ivy-${project.version}.xml" />
-
-  <!-- クラスパスの定義 -->
-  <path id="project.class.path">
-    <fileset dir="lib">
+  <path id="maven-ant-tasks.classpath">
+    <fileset dir="${user.home}/lib/java/maven-ant-tasks">
       <include name="*.jar" />
     </fileset>
   </path>
+  <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant"
+           classpathref="maven-ant-tasks.classpath" /> 
 
-  <!-- ターゲットの定義 -->
+  <property environment="env"/>
+  <property file="local.properties" />
 
-  <!-- clean -->
-  <target name="clean" description="ビルド環境のクリア">
-    <delete>
-      <fileset dir="lib">
-        <include name="*.jar" />
-      </fileset>
-      <fileset dir="${dir.build}">
-        <include name="**/*" />
-      </fileset>
-      <fileset dir="target/test-classes">
-        <include name="**/*" />
-      </fileset>
-    </delete>
-  </target>
+  <xmlproperty file="pom.xml" />
+
+  <!-- Path Definitions -->
+  <path id="project.class.path">
+    <pathelement location="${javac.dest.test}" />
+    <pathelement location="${javac.dest}" />
+    <fileset refid="maven-ant-tasks.dependency.fileset"/>
+  </path>
 
   <!-- prepare -->
-  <target name="prepare" description="ビルド環境の準備">
-    <mkdir dir="${dir.build}" />
-    <mkdir dir="target/test-classes" />
-    <ivy:settings file="ivy-settings.xml" />
-    <ivy:convertpom pomFile="pom.xml" ivyFile="${ivy.file}" />
-    <ivy:retrieve file="${ivy.file}" />
-  </target>
-
-  <!-- javac -->
-  <target name="compile" depends="prepare" description="コンパイル">
-    <javac debug="on" deprecation="on" destdir="${dir.build}">
-      <classpath refid="project.class.path" />
-      <include name="**/*.java" />
-      <src path="${dir.src}" />
-    </javac>
-
-    <copy todir="${dir.build}">
-      <fileset dir="src/main/resources">
-        <include name="**/*" />
-      </fileset>
-    </copy>
-
-    <javac debug="on" encoding="${encoding}" destdir="target/test-classes">
-      <classpath>
-        <path refid="project.class.path" />
-        <pathelement location="${dir.build}" />
-      </classpath>
-      <include name="**/*.java" />
-      <src path="src/test/java" />
-    </javac>
-
-    <copy todir="target/test-classes">
-      <fileset dir="src/test/resources">
-        <include name="**/*" />
-      </fileset>
-    </copy>
+  <target name="prepare" description="Preparing">
+    <artifact:pom file="pom.xml" id="maven.project"/>
+    <artifact:dependencies fileSetId="maven-ant-tasks.dependency.fileset">
+      <pom refid="maven.project"/>
+    </artifact:dependencies>
+    <artifact:mvn pom="pom.xml">
+      <arg value="package"/>
+      <arg value="-Dmaven.test.skip=true"/>
+    </artifact:mvn>
   </target>
 
   <!-- run -->
-  <target name="run" depends="compile" description="load project file">
-    <java classname="jp.klab.imagetool.Main" fork="yes">
-      <jvmarg value="-Dfile.encoding=${file.encoding}" />
+  <target name="run" depends="prepare" description="">
+    <java classname="Main" fork="yes">
+      <jvmarg value="-Dfile.encoding=${project.build.plugins.plugin.configuration.encoding}" />
       <classpath>
-        <pathelement location="${dir.build}" />
         <path refid="project.class.path" />
       </classpath>
     </java>
