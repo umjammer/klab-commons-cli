@@ -6,6 +6,8 @@
 
 package org.klab.commons.cli.spi;
 
+import java.util.ServiceLoader;
+
 import org.klab.commons.cli.Options.ExceptionHandler;
 
 import vavi.beans.DefaultBinder;
@@ -21,7 +23,7 @@ public abstract class CliProvider {
 
     /** */
     protected ExceptionHandler<?> exceptionHandler;
-    
+
     /** */
     public void setExceptionHandler(ExceptionHandler<?> exceptionHandler) {
         this.exceptionHandler = exceptionHandler;
@@ -53,6 +55,26 @@ public abstract class CliProvider {
      * @param destBeans
      */
     public abstract <T> void bind(String[] sourceArgs, T destBeans);
+
+    /** */
+    public static class Util {
+
+        private static CliProvider defaultProvider;
+
+        static {
+            ServiceLoader<CliProvider> loader = ServiceLoader.load(CliProvider.class);
+            defaultProvider = loader.iterator().next();
+//System.err.println("default provider: " + CliProvider.Util.defaultService());
+        }
+
+        private Util() {
+        }
+
+        /** */
+        public static CliProvider defaultService() {
+            return defaultProvider;
+        }
+    }
 }
 
 /* */

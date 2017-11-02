@@ -35,6 +35,9 @@ public @interface Option {
     /** 引数の説明 */
     String description() default "";
 
+    /** like <code>-Dname=valie</code>. '-' cannot be set, ignored */
+    char valueSeparator() default '-';
+
     /** 引数の名前の省略形 */
     String option();
 }
