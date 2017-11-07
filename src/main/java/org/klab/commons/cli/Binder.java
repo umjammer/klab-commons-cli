@@ -8,7 +8,7 @@ package org.klab.commons.cli;
 
 
 /**
- * フィールドへの複雑な代入を実装します。 
+ * フィールドへの複雑な代入を実装します。
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070224 nsano initial version <br>
@@ -23,8 +23,8 @@ public interface Binder<T> {
 
     /**
      * ここで代入を実装します。
-     * 
-     * @throws ArrayIndexOutOfBoundsException 
+     *
+     * @throws ArrayIndexOutOfBoundsException
      */
     void bind(T bean, String[] args, Context context);
 }

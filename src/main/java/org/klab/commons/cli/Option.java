@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 
 /**
  * コマンドライン引数を代入するフィールドに対して
- * 設定します。 
+ * 設定します。
  *
  * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (sano-n)
  * @version 0.00 080225 sano-n initial version <br>

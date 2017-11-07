@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 
 /**
- * OptionsTest. 
+ * OptionsTest.
  *
  * @author <a href="mailto:sano-n@klab.jp">Naohide Sano</a> (sano-n)
  * @version 0.00 2009/05/31 sano-n initial version <br>
@@ -180,9 +180,9 @@ public class OptionsTest {
           .withDescription("set the mbv file id")
           .withLongOpt("id")
           .create();
-System.err.println(option);                      
+System.err.println(option);
     }
-    
+
     @Options
     class Test7 {
         @Option(argName = "String", description = "string value", args = 1, option = "x", required = false)

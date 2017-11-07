@@ -15,7 +15,7 @@ import org.klab.commons.cli.Options.ExceptionHandler;
 
 
 /**
- * Option. 
+ * Option.
  *
  * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (sano-n)
  * @version 0.00 080225 sano-n initial version <br>

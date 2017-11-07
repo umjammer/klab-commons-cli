@@ -31,7 +31,7 @@ import vavi.beans.BeanUtil;
 
 
 /**
- * ApacheCliProvider. 
+ * ApacheCliProvider.
  * <p>
  * {@link #option} は CommandLineParser のクラス名を設定します。
  * </p>
@@ -41,7 +41,7 @@ import vavi.beans.BeanUtil;
 public class ApacheCliProvider extends CliProvider {
 
     /** */
-    private static Log logger = LogFactory.getLog(ApacheCliProvider.class); 
+    private static Log logger = LogFactory.getLog(ApacheCliProvider.class);
 
     /* */
     @SuppressWarnings({ "static-access", "unchecked", "rawtypes" })

@@ -14,7 +14,7 @@ import vavi.beans.DefaultBinder;
 
 
 /**
- * CliProvider. 
+ * CliProvider.
  *
  * @author <a href="mailto:sano-n@klab.jp">Naohide Sano</a> (sano-n)
  * @version 0.00 2009/05/30 sano-n initial version <br>
@@ -38,7 +38,7 @@ public abstract class CliProvider {
     }
 
     /** 様々な用途に使用されます */
-    protected String option; 
+    protected String option;
 
     /** */
     public void setOption(String option) {
@@ -48,9 +48,9 @@ public abstract class CliProvider {
     /**
      * コマンドライン引数の文字列配列 sourceArgs を destBeans のフィールドの値として
      * 設定します。
-     * 
+     *
      * TODO exception handling
-     * 
+     *
      * @param sourceArgs
      * @param destBeans
      */

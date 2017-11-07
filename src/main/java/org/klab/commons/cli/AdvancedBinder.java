@@ -15,9 +15,9 @@ import vavi.beans.DefaultBinder;
 
 /**
  * フィールドへの代入を行う拡張クラスです。
- *  
+ *
  * <li> TODO もっと充実させる
- * 
+ *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070224 nsano initial version <br>
  */

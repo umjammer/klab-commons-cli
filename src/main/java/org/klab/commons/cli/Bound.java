@@ -37,7 +37,7 @@ public @interface Bound {
     String value() default "";
 
     /**
-     * TODO アノテーションがメソッド指定の場合 
+     * TODO アノテーションがメソッド指定の場合
      */
     static class Util {
 
@@ -47,7 +47,7 @@ public @interface Bound {
         }
 
         /**
-         * 
+         *
          * @param field @{@link Bound} annotated field.
          * @throws NullPointerException when field is not annotated by {@link Bound}
          */
@@ -56,7 +56,7 @@ public @interface Bound {
                 Bound bound = field.getAnnotation(Bound.class);
                 @SuppressWarnings("unchecked")
                 Binder<T> binder = (Binder<T>) bound.binder().newInstance();
-                return binder; 
+                return binder;
             } catch (Exception e) {
                 throw new IllegalStateException(e);
             }

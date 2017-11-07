@@ -30,7 +30,7 @@ public @interface Argument {
     boolean required() default false;
 
     /**
-     * TODO アノテーションがメソッド指定の場合 
+     * TODO アノテーションがメソッド指定の場合
      */
     static class Util {
 
