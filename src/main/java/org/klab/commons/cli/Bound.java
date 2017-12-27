@@ -19,7 +19,7 @@ import java.lang.reflect.Field;
  * 代入の実装は {@link Binder} インターフェースを実装した
  * クラスで行ってください。
  *
- * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
+ * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
  * @version 0.00 070224 nsano initial version <br>
  */
 @Target({ ElementType.FIELD, ElementType.METHOD })

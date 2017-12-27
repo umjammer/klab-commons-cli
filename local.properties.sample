@@ -10,8 +10,4 @@ javac.resource.test=src/test/resources
 javac.dest=target/classes
 javac.dest.test=target/test-classes
 
-#
-# run
-#
-
 ##
