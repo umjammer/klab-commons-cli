@@ -53,7 +53,7 @@ public class ApacheCliProvider extends CliProvider {
             if (option.isEmpty()) {
                 option = "org.apache.commons.cli.BasicParser";
             }
-            commandLineParser = (CommandLineParser) Class.forName(option).newInstance();
+            commandLineParser = (CommandLineParser) Class.forName(option).getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }

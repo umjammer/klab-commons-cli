@@ -40,11 +40,14 @@ public @interface HelpOption {
     /** */
     class Util {
 
+        private Util() {
+        }
+
         /** */
         public static ExceptionHandler<?> getExceptionHandler(Object bean) {
             try {
                 HelpOption option = bean.getClass().getAnnotation(HelpOption.class);
-                ExceptionHandler<?> exceptionHandler = option.helpHandler().newInstance();
+                ExceptionHandler<?> exceptionHandler = option.helpHandler().getDeclaredConstructor().newInstance();
                 return exceptionHandler;
             } catch (Exception e) {
                 throw new IllegalStateException(e);

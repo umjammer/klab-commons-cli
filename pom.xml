@@ -17,7 +17,8 @@
 TODO
 
     add group functionality?
-    add default value? (just set values into fields?)</description>
+    add default value? (just set values into fields?)
+    class binding</description>
   <url>https://github.com/umjammer/klab-commons-cli</url>
   <inceptionYear>2008</inceptionYear>
   <distributionManagement>
@@ -48,11 +49,17 @@ TODO
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.5</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.3.0</version>
       <scope>test</scope>
       <optional>false</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.3.0</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.github.umjammer</groupId>

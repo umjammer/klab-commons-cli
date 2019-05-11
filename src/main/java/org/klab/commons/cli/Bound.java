@@ -39,7 +39,10 @@ public @interface Bound {
     /**
      * TODO アノテーションがメソッド指定の場合
      */
-    static class Util {
+    class Util {
+
+        private Util() {
+        }
 
         /** */
         public static boolean isBound(Field field) {
@@ -55,7 +58,7 @@ public @interface Bound {
             try {
                 Bound bound = field.getAnnotation(Bound.class);
                 @SuppressWarnings("unchecked")
-                Binder<T> binder = (Binder<T>) bound.binder().newInstance();
+                Binder<T> binder = (Binder<T>) bound.binder().getDeclaredConstructor().newInstance();
                 return binder;
             } catch (Exception e) {
                 throw new IllegalStateException(e);

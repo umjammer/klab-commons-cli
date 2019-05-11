@@ -32,7 +32,10 @@ public @interface Argument {
     /**
      * TODO アノテーションがメソッド指定の場合
      */
-    static class Util {
+    class Util {
+
+        private Util() {
+        }
 
         /** */
         public static int getIndex(Field field) {

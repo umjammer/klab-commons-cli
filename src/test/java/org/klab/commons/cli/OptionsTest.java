@@ -9,10 +9,10 @@ package org.klab.commons.cli;
 import java.io.File;
 
 import org.apache.commons.cli.OptionBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
@@ -53,8 +53,8 @@ public class OptionsTest {
         assertEquals(test1.s, 1);
         assertEquals(test1.i, 2);
         assertEquals(test1.l, 3l);
-        assertEquals("0", test1.f, 4.0f, 0);
-        assertEquals("0", test1.d, 5.0, 0);
+        assertEquals(test1.f, 4.0f, 0, "0");
+        assertEquals(test1.d, 5.0, 0, "0");
         assertEquals(test1.string, "String");
     }
 
@@ -90,8 +90,8 @@ public class OptionsTest {
         assertEquals(1, test2.s);
         assertEquals(2, test2.i);
         assertEquals(3l, test2.l);
-        assertEquals(null, 4.0f, test2.f, 0);
-        assertEquals(null, 5.0, test2.d, 0);
+        assertEquals(4.0f, test2.f, 0, (String) null);
+        assertEquals(5.0, test2.d, 0, (String) null);
         assertEquals("String", test2.string);
         assertEquals("posix", test2.posix);
     }

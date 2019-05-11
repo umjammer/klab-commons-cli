@@ -95,7 +95,7 @@ public @interface Options {
                 if (provider.equals(org.klab.commons.cli.spi.CliProvider.class)) {
                     return CliProvider.Util.defaultService();
                 } else {
-                    return provider.newInstance();
+                    return provider.getDeclaredConstructor().newInstance();
                 }
             } catch (Exception e) {
                 throw new IllegalStateException(e);
@@ -106,7 +106,7 @@ public @interface Options {
         public static ExceptionHandler<?> getExceptionHandler(Object bean) {
             try {
                 Options options = bean.getClass().getAnnotation(Options.class);
-                ExceptionHandler<?> exceptionHandler = options.exceptionHandler().newInstance();
+                ExceptionHandler<?> exceptionHandler = options.exceptionHandler().getDeclaredConstructor().newInstance();
                 return exceptionHandler;
             } catch (Exception e) {
                 throw new IllegalStateException(e);
@@ -117,7 +117,7 @@ public @interface Options {
         public static DefaultBinder getDefaultBinder(Object bean) {
             try {
                 Options options = bean.getClass().getAnnotation(Options.class);
-                DefaultBinder defaultBinder = options.defaultBinder().newInstance();
+                DefaultBinder defaultBinder = options.defaultBinder().getDeclaredConstructor().newInstance();
                 return defaultBinder;
             } catch (Exception e) {
                 throw new IllegalStateException(e);
