@@ -81,13 +81,9 @@ public class ApacheCliProvider extends CliProvider {
         }
 
         //
-        for (Field field : destBean.getClass().getDeclaredFields()) {
+        for (Field field : Util.getOptionFields(destBean)) {
 //logger.debug("field: " + field.getName());
             org.klab.commons.cli.Option optionAnnotation = field.getAnnotation(org.klab.commons.cli.Option.class);
-            if (optionAnnotation == null) {
-//logger.debug("not @Option: " + field.getName());
-                continue;
-            }
 
             //
             Option option;

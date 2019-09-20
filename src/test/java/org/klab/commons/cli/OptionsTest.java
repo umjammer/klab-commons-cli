@@ -9,6 +9,7 @@ package org.klab.commons.cli;
 import java.io.File;
 
 import org.apache.commons.cli.OptionBuilder;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,14 +49,14 @@ public class OptionsTest {
         String[] args = { "-b", "65", "-c", "c", "-s", "1", "-i", "2", "-l", "3", "-f", "4.0", "-d", "5.0", "-x", "String" };
         Test1 test1 = new Test1();
         Options.Util.bind(args, test1);
-        assertEquals(test1.b, 0x41);
-        assertEquals(test1.c, 'c');
-        assertEquals(test1.s, 1);
-        assertEquals(test1.i, 2);
-        assertEquals(test1.l, 3l);
-        assertEquals(test1.f, 4.0f, 0, "0");
-        assertEquals(test1.d, 5.0, 0, "0");
-        assertEquals(test1.string, "String");
+        assertEquals(0x41, test1.b);
+        assertEquals('c', test1.c);
+        assertEquals(1, test1.s);
+        assertEquals(2, test1.i);
+        assertEquals(3l, test1.l);
+        assertEquals(4.0f, test1.f, 0.1f, "0");
+        assertEquals(5.0, test1.d, 0.1, "0");
+        assertEquals("String", test1.string);
     }
 
     @Options(option = "org.apache.commons.cli.PosixParser")
@@ -90,8 +91,8 @@ public class OptionsTest {
         assertEquals(1, test2.s);
         assertEquals(2, test2.i);
         assertEquals(3l, test2.l);
-        assertEquals(4.0f, test2.f, 0, (String) null);
-        assertEquals(5.0, test2.d, 0, (String) null);
+        assertEquals(4.0f, test2.f, 0.1f, (String) null);
+        assertEquals(5.0, test2.d, 0.1f, (String) null);
         assertEquals("String", test2.string);
         assertEquals("posix", test2.posix);
     }
@@ -137,7 +138,7 @@ public class OptionsTest {
         String[] args = { "-?" };
         Test4 test4 = new Test4();
         Options.Util.bind(args, test4);
-        assertEquals(true, test4.help);
+        assertTrue(test4.help);
     }
 
     @Options
@@ -327,6 +328,33 @@ System.err.println(option);
         test10 = new Test10();
         Options.Util.bind(args2, test10);
         assertTrue(!test10.b);
+    }
+
+    class Test11Super {
+        @Option(argName = "String2", description = "string value2", args = 1, option = "y", required = false)
+        String string2;
+        @Option(argName = "b", description = "int value2", args = 1, option = "b", required = false)
+        int b;
+    }
+
+    @Options(exceptionHandler = ExceptionHandler10.class) // TODO default exceptionHandler will call System.exit(1)
+    class Test11 extends Test11Super {
+        @Option(argName = "String", description = "string value", args = 1, option = "x", required = false)
+        String string;
+        @Option(argName = "a", description = "int value", args = 1, option = "a", required = false)
+        int a;
+    }
+
+    @DisplayName("super class options")
+    @Test
+    public void test11() throws Exception {
+        String[] args = { "-a", "1", "-b", "2", "-x", "xxx", "-y", "yyy" };
+        Test11 test11 = new Test11();
+        Options.Util.bind(args, test11);
+        assertEquals(1, test11.a);
+        assertEquals("xxx", test11.string);
+        assertEquals(2, test11.b);
+        assertEquals(test11.string2, "yyy");
     }
 }
 

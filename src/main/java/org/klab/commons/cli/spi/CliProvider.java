@@ -6,8 +6,13 @@
 
 package org.klab.commons.cli.spi;
 
+import java.lang.reflect.Field;
+import java.util.HashSet;
 import java.util.ServiceLoader;
+import java.util.Set;
 
+import org.klab.commons.cli.Option;
+import org.klab.commons.cli.Options;
 import org.klab.commons.cli.Options.ExceptionHandler;
 
 import vavi.beans.DefaultBinder;
@@ -68,6 +73,33 @@ public abstract class CliProvider {
         }
 
         private Util() {
+        }
+
+        /**
+         * @return {@link Option} annotated fields
+         */
+        public static Set<Field> getOptionFields(Object bean) {
+            //
+            Options propsEntity = bean.getClass().getAnnotation(Options.class);
+            if (propsEntity == null) {
+                throw new IllegalArgumentException("bean is not annotated with @Options");
+            }
+
+            //
+            Set<Field> optionFields = new HashSet<>();
+
+            Class<?> clazz = bean.getClass();
+            while (clazz != null) {
+                for (Field field : clazz.getDeclaredFields()) {
+                    Option property = field.getAnnotation(Option.class);
+                    if (property != null) {
+                        optionFields.add(field);
+                    }
+                }
+                clazz = clazz.getSuperclass();
+            }
+
+            return optionFields;
         }
 
         /** */

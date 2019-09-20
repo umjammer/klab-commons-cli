@@ -1,12 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>org.klab</groupId>
   <artifactId>klab-commons-cli</artifactId>
-  <packaging>jar</packaging>
-  <version>1.3.0</version>
+  <version>1.3.1</version>
+
   <name>klab-commons-cli</name>
   <description>KLab CLI Annotation Laibrary
+
+1.3.1
+
+    deal super classes
 
 1.3.0
 
@@ -21,13 +26,17 @@ TODO
     class binding</description>
   <url>https://github.com/umjammer/klab-commons-cli</url>
   <inceptionYear>2008</inceptionYear>
-  <distributionManagement>
-    <repository>
-      <id>internal.repo</id>
-      <name>Temporary Staging Repository</name>
-      <url>file://${project.build.directory}/mvn-repo</url>
-    </repository>
-  </distributionManagement>
+  <scm>
+    <url>https://github.com/umjammer/klab-commons-cli</url>
+  </scm>
+  <issueManagement>
+    <url>https://github.com/umjammer/klab-commons-cli/issues</url>
+  </issueManagement>
+  <organization>
+    <name>KLab Inc.</name>
+    <url>http://www.klab.com</url>
+  </organization>
+
   <build>
     <finalName>klab-commons-cli</finalName>
     <plugins>
@@ -41,30 +50,19 @@ TODO
       </plugin>
     </plugins>
   </build>
+
   <repositories>
     <repository>
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
     </repository>
   </repositories>
+
   <dependencies>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>5.3.0</version>
-      <scope>test</scope>
-      <optional>false</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.3.0</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>com.github.umjammer</groupId>
       <artifactId>vavi-commons</artifactId>
-      <version>1.0.6</version>
+      <version>1.0.8</version>
       <optional>false</optional>
     </dependency>
     <dependency>
@@ -79,15 +77,19 @@ TODO
       <version>1.1.1</version>
       <optional>false</optional>
     </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.3.0</version>
+      <scope>test</scope>
+      <optional>false</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.3.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
-  <scm>
-    <url>https://github.com/umjammer/klab-commons-cli</url>
-  </scm>
-  <issueManagement>
-    <url>https://github.com/umjammer/klab-commons-cli/issues</url>
-  </issueManagement>
-  <organization>
-    <name>KLab Inc.</name>
-    <url>http://www.klab.com</url>
-  </organization>
 </project>
