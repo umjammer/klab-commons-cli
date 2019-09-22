@@ -337,7 +337,7 @@ System.err.println(option);
         int b;
     }
 
-    @Options(exceptionHandler = ExceptionHandler10.class) // TODO default exceptionHandler will call System.exit(1)
+    @Options
     class Test11 extends Test11Super {
         @Option(argName = "String", description = "string value", args = 1, option = "x", required = false)
         String string;
@@ -355,6 +355,35 @@ System.err.println(option);
         assertEquals("xxx", test11.string);
         assertEquals(2, test11.b);
         assertEquals(test11.string2, "yyy");
+    }
+
+    public static class ExceptionHandler12 implements Options.ExceptionHandler<Test12> {
+        public void handleException(Context<Test12> context) {
+            context.printHelp();
+            context.getBean().help = true;
+        }
+    }
+
+    @HelpOption(option = "?", description="print this help", helpHandler = ExceptionHandler12.class)
+    class Test12Super {
+        @Option(argName = "b", description = "int value2", args = 1, option = "b", required = false)
+        int b;
+        boolean help;
+    }
+
+    @Options
+    class Test12 extends Test12Super {
+        @Option(argName = "a", description = "int value", args = 1, option = "a", required = false)
+        int a;
+    }
+
+    @DisplayName("super class help option")
+    @Test
+    public void test12() throws Exception {
+        String[] args = { "-?" };
+        Test12 test12 = new Test12();
+        Options.Util.bind(args, test12);
+        assertTrue(test12.help);
     }
 }
 

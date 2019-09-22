@@ -44,9 +44,8 @@ public @interface HelpOption {
         }
 
         /** */
-        public static ExceptionHandler<?> getExceptionHandler(Object bean) {
+        public static ExceptionHandler<?> getExceptionHandler(HelpOption option) {
             try {
-                HelpOption option = bean.getClass().getAnnotation(HelpOption.class);
                 ExceptionHandler<?> exceptionHandler = option.helpHandler().getDeclaredConstructor().newInstance();
                 return exceptionHandler;
             } catch (Exception e) {

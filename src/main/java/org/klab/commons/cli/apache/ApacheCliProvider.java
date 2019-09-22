@@ -67,9 +67,9 @@ public class ApacheCliProvider extends CliProvider {
         //
         org.klab.commons.cli.Options.ExceptionHandler<?> helpHandler = null;
         String helpOption = null;
-        org.klab.commons.cli.HelpOption helpOptionAnnotation = destBean.getClass().getAnnotation(org.klab.commons.cli.HelpOption.class);
+        org.klab.commons.cli.HelpOption helpOptionAnnotation = Util.getHelpOption(destBean);
         if (helpOptionAnnotation != null) {
-            helpHandler = HelpOption.Util.getExceptionHandler(destBean);
+            helpHandler = HelpOption.Util.getExceptionHandler(helpOptionAnnotation);
             helpOption = helpOptionAnnotation.option();
             Option option;
             if (helpOptionAnnotation.description().length() > 0) {

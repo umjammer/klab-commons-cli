@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.ServiceLoader;
 import java.util.Set;
 
+import org.klab.commons.cli.HelpOption;
 import org.klab.commons.cli.Option;
 import org.klab.commons.cli.Options;
 import org.klab.commons.cli.Options.ExceptionHandler;
@@ -105,6 +106,29 @@ public abstract class CliProvider {
         /** */
         public static CliProvider defaultService() {
             return defaultProvider;
+        }
+
+        /**
+         * {link {@link HelpOption} located the nearest hierarchy from the <code>bean</code> class has priority.
+         */
+        public static HelpOption getHelpOption(Object bean) {
+            //
+            Options propsEntity = bean.getClass().getAnnotation(Options.class);
+            if (propsEntity == null) {
+                throw new IllegalArgumentException("bean is not annotated with @Options");
+            }
+
+            //
+            Class<?> clazz = bean.getClass();
+            while (clazz != null) {
+                HelpOption helpOption = clazz.getAnnotation(HelpOption.class);
+                if (helpOption != null) {
+                    return helpOption;
+                }
+                clazz = clazz.getSuperclass();
+            }
+
+            return null;
         }
     }
 }
