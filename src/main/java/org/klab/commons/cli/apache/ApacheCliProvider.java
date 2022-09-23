@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -19,9 +20,6 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.klab.commons.cli.Bound;
 import org.klab.commons.cli.Binder;
 import org.klab.commons.cli.HelpOption;
@@ -41,7 +39,7 @@ import vavi.beans.BeanUtil;
 public class ApacheCliProvider extends CliProvider {
 
     /** */
-    private static Log logger = LogFactory.getLog(ApacheCliProvider.class);
+    private static Logger logger = Logger.getLogger(ApacheCliProvider.class.getName());
 
     /* */
     @SuppressWarnings({ "static-access", "unchecked", "rawtypes" })
@@ -174,16 +172,16 @@ public class ApacheCliProvider extends CliProvider {
                     String value = commandLine.getOptionValue(opt); // TODO check args
                     defaultBinder.bind(destBean, field, fieldClass, value, value);
                 }
-logger.debug(option.getArgName() + "[" + opt + "]: " + BeanUtil.getFieldValue(field, destBean));
+logger.fine(option.getArgName() + "[" + opt + "]: " + BeanUtil.getFieldValue(field, destBean));
             }
         }
 
         //
         for (Field field : destBean.getClass().getDeclaredFields()) {
-//logger.debug("field: " + field.getName());
+logger.finer("field: " + field.getName());
             org.klab.commons.cli.Argument argumentAnnotation = field.getAnnotation(org.klab.commons.cli.Argument.class);
             if (argumentAnnotation == null) {
-//logger.debug("not @Argument: " + field.getName());
+logger.finer("not @Argument: " + field.getName());
                 continue;
             }
 
@@ -192,7 +190,7 @@ logger.debug(option.getArgName() + "[" + opt + "]: " + BeanUtil.getFieldValue(fi
             try {
                 if (Bound.Util.isBound(field)) {
                     Binder<T> binder = Bound.Util.getBinder(field);
-//logger.debug("args[" + index + "]: " + commandLine.getArgs()[index]);
+logger.finer("args[" + index + "]: " + commandLine.getArgs()[index]);
                     binder.bind(destBean, new String[] { commandLine.getArgs()[index] }, binderContext);
                 } else {
                     Class<?> fieldClass = field.getType();
@@ -207,7 +205,7 @@ logger.debug(option.getArgName() + "[" + opt + "]: " + BeanUtil.getFieldValue(fi
                         }
                     });
                 } else {
-logger.debug("args[" + index + "]: not required, ignored");
+logger.fine("args[" + index + "]: not required, ignored");
                 }
             }
         }
