@@ -8,7 +8,6 @@ package org.klab.commons.cli;
 
 import java.io.File;
 
-import org.apache.commons.cli.OptionBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -172,15 +171,14 @@ public class OptionsTest {
     }
 
     @Test
-    @SuppressWarnings("static-access")
     public void test06() throws Exception {
-        org.apache.commons.cli.Option option = OptionBuilder
+        org.apache.commons.cli.Option option = org.apache.commons.cli.Option.builder()
           .hasArg(true)
-          .withArgName("id for mbv file")
-          .isRequired(false)
-          .withDescription("set the mbv file id")
-          .withLongOpt("id")
-          .create();
+          .argName("id for mbv file")
+          .required(false)
+          .desc("set the mbv file id")
+          .longOpt("id")
+          .build();
 System.err.println(option);
     }
 

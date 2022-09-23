@@ -14,14 +14,13 @@ import java.util.logging.Logger;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.PosixParser;
-import org.klab.commons.cli.Bound;
 import org.klab.commons.cli.Binder;
+import org.klab.commons.cli.Bound;
 import org.klab.commons.cli.HelpOption;
 import org.klab.commons.cli.spi.CliProvider;
 
@@ -73,7 +72,7 @@ public class ApacheCliProvider extends CliProvider {
             if (helpOptionAnnotation.description().length() > 0) {
                 option = new Option(helpOptionAnnotation.option(), helpOptionAnnotation.description());
             } else {
-                option = OptionBuilder.create(helpOptionAnnotation.option());
+                option = Option.builder(helpOptionAnnotation.option()).build();
             }
             options.addOption(option);
         }
@@ -86,16 +85,16 @@ public class ApacheCliProvider extends CliProvider {
             //
             Option option;
             if (optionAnnotation.description().length() > 0) {
-                if (PosixParser.class.isInstance(commandLineParser) && optionAnnotation.option().length() > 1) {
-                    option = OptionBuilder.withLongOpt(optionAnnotation.option()).withDescription(optionAnnotation.description()).create();
+                if (DefaultParser.class.isInstance(commandLineParser) && optionAnnotation.option().length() > 1) {
+                    option = Option.builder().longOpt(optionAnnotation.option()).desc(optionAnnotation.description()).build();
                 } else {
-                    option = new Option(optionAnnotation.option(), optionAnnotation.description());
+                    option = Option.builder(optionAnnotation.option()).desc(optionAnnotation.description()).build();
                 }
             } else {
-                if (PosixParser.class.isInstance(commandLineParser) && optionAnnotation.option().length() > 1) {
-                    option = OptionBuilder.withLongOpt(optionAnnotation.option()).create();
+                if (DefaultParser.class.isInstance(commandLineParser) && optionAnnotation.option().length() > 1) {
+                    option = Option.builder().longOpt(optionAnnotation.option()).build();
                 } else {
-                    option = OptionBuilder.create(optionAnnotation.option());
+                    option = Option.builder(optionAnnotation.option()).build();
                 }
             }
             if (optionAnnotation.args() != 0) {
@@ -154,7 +153,7 @@ public class ApacheCliProvider extends CliProvider {
             Option option = optionFields.get(field);
 //logger.debug("@Option: " + field.getName() + ", " + option.getOpt() + ", " + option.getLongOpt());
             String opt;
-            if (PosixParser.class.isInstance(commandLineParser) && option.getOpt() == null) {
+            if (DefaultParser.class.isInstance(commandLineParser) && option.getOpt() == null) {
                 opt = option.getLongOpt();
             } else {
                 opt = option.getOpt();
