@@ -385,6 +385,25 @@ System.err.println(option);
         Options.Util.bind(args, test12);
         assertTrue(test12.help);
     }
+
+    enum Enum13 {
+        enumA, enumB, enumX
+    }
+
+    @Options
+    static class Test13 {
+        @Option(argName = "a", description = "enum value", args = 1, option = "a", required = false)
+        Enum13 a;
+    }
+
+    @DisplayName("enum")
+    @Test
+    public void test13() throws Exception {
+        String[] args = { "-a", "enumX" };
+        Test13 test13 = new Test13();
+        Options.Util.bind(args, test13);
+        assertEquals(Enum13.enumX, test13.a);
+    }
 }
 
 /* */
