@@ -54,5 +54,3 @@ public @interface HelpOption {
         }
     }
 }
-
-/* */

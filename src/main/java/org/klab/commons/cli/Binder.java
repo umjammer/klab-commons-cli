@@ -28,5 +28,3 @@ public interface Binder<T> {
      */
     void bind(T bean, String[] args, Context context);
 }
-
-/* */

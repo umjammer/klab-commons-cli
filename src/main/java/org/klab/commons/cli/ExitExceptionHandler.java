@@ -29,5 +29,3 @@ logger.log(Level.FINE, "ExceptionHandler", context.exception);
         System.exit(1);
     }
 }
-
-/* */

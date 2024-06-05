@@ -31,5 +31,3 @@ logger.log(Level.FINE, "ExceptionHandler", context.exception);
         throw (RuntimeException) new IllegalStateException().initCause(context.exception);
     }
 }
-
-/* */

@@ -210,5 +210,3 @@ logger.fine("args[" + index + "]: not required, ignored");
         }
     }
 }
-
-/* */

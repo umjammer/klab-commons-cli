@@ -66,5 +66,3 @@ public @interface Bound {
         }
     }
 }
-
-/* */

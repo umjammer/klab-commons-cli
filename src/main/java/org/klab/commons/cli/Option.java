@@ -41,5 +41,3 @@ public @interface Option {
     /** 引数の名前の省略形 */
     String option();
 }
-
-/* */

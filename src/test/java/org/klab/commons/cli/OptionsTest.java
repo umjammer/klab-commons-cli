@@ -405,5 +405,3 @@ System.err.println(option);
         assertEquals(Enum13.enumX, test13.a);
     }
 }
-
-/* */
