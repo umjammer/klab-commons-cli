@@ -8,11 +8,12 @@ package org.klab.commons.cli;
 
 import java.io.File;
 
-import org.apache.commons.cli.OptionBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -25,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class OptionsTest {
 
     @Options
-    class Test1 {
+    static class Test1 {
         @Option(argName = "byte", description = "byte value", args = 1, option = "b", required = false)
         byte b;
         @Option(argName = "char", description = "char value", args = 1, option = "c", required = false)
@@ -45,6 +46,7 @@ public class OptionsTest {
     }
 
     @Test
+    @DisplayName("basic usage for any types")
     public void test01() throws Exception {
         String[] args = { "-b", "65", "-c", "c", "-s", "1", "-i", "2", "-l", "3", "-f", "4.0", "-d", "5.0", "-x", "String" };
         Test1 test1 = new Test1();
@@ -53,14 +55,14 @@ public class OptionsTest {
         assertEquals('c', test1.c);
         assertEquals(1, test1.s);
         assertEquals(2, test1.i);
-        assertEquals(3l, test1.l);
+        assertEquals(3L, test1.l);
         assertEquals(4.0f, test1.f, 0.1f, "0");
         assertEquals(5.0, test1.d, 0.1, "0");
         assertEquals("String", test1.string);
     }
 
     @Options(option = "org.apache.commons.cli.PosixParser")
-    class Test2 {
+    static class Test2 {
         @Option(argName = "byte", description = "byte value", args = 1, option = "b", required = false)
         byte b;
         @Option(argName = "char", description = "char value", args = 1, option = "c", required = false)
@@ -82,6 +84,7 @@ public class OptionsTest {
     }
 
     @Test
+    @DisplayName("use poxix parser")
     public void test02() throws Exception {
         String[] args = { "-b", "65", "-c", "c", "-s", "1", "-i", "2", "-l", "3", "-f", "4.0", "-d", "5.0", "-x", "String", "--posix", "posix" };
         Test2 test2 = new Test2();
@@ -90,7 +93,7 @@ public class OptionsTest {
         assertEquals('c', test2.c);
         assertEquals(1, test2.s);
         assertEquals(2, test2.i);
-        assertEquals(3l, test2.l);
+        assertEquals(3L, test2.l);
         assertEquals(4.0f, test2.f, 0.1f, (String) null);
         assertEquals(5.0, test2.d, 0.1f, (String) null);
         assertEquals("String", test2.string);
@@ -98,7 +101,7 @@ public class OptionsTest {
     }
 
     @Options
-    class Test3 {
+    static class Test3 {
         @Option(argName = "String", description = "string value", args = 1, option = "x", required = false)
         @Bound(binder = X_Binder.class)
         String string;
@@ -111,6 +114,7 @@ public class OptionsTest {
     }
 
     @Test
+    @DisplayName("use binder")
     public void test03() throws Exception {
         String[] args = { "-x", "String" };
         Test3 test3 = new Test3();
@@ -120,7 +124,7 @@ public class OptionsTest {
 
     @Options
     @HelpOption(option = "?", helpHandler = HelpHandler.class)
-    class Test4 {
+    static class Test4 {
         @Option(argName = "String", description = "string value", args = 1, option = "x", required = false)
         String string;
         boolean help;
@@ -134,6 +138,7 @@ public class OptionsTest {
     }
 
     @Test
+    @DisplayName("help")
     public void test04() throws Exception {
         String[] args = { "-?" };
         Test4 test4 = new Test4();
@@ -161,6 +166,7 @@ public class OptionsTest {
     }
 
     @Test
+    @DisplayName("argument")
     public void test05() throws Exception {
         String[] args = { "-x", "aaa", "args0", "args1", "args2" };
         Test5 test5 = new Test5();
@@ -172,20 +178,20 @@ public class OptionsTest {
     }
 
     @Test
-    @SuppressWarnings("static-access")
+    @DisplayName("apache direct")
     public void test06() throws Exception {
-        org.apache.commons.cli.Option option = OptionBuilder
+        org.apache.commons.cli.Option option = org.apache.commons.cli.Option.builder()
           .hasArg(true)
-          .withArgName("id for mbv file")
-          .isRequired(false)
-          .withDescription("set the mbv file id")
-          .withLongOpt("id")
-          .create();
+          .argName("id for mbv file")
+          .required(false)
+          .desc("set the mbv file id")
+          .longOpt("id")
+          .build();
 System.err.println(option);
     }
 
     @Options
-    class Test7 {
+    static class Test7 {
         @Option(argName = "String", description = "string value", args = 1, option = "x", required = false)
         @Bound(binder = X_Binder7.class)
         String string;
@@ -196,15 +202,16 @@ System.err.println(option);
 
     public static class X_Binder7 implements Binder<Test7> {
         public void bind(Test7 bean, String[] args, Context context) {
-            assertEquals(true, context.hasOption("x"));
-            assertEquals(false, context.hasOption("y"));
-            assertEquals(false, context.hasOption("yy"));
-            assertEquals(false, context.hasOption("a"));
+            assertTrue(context.hasOption("x"));
+            assertFalse(context.hasOption("y"));
+            assertFalse(context.hasOption("yy"));
+            assertFalse(context.hasOption("a"));
             bean.string = args[0].toUpperCase();
         }
     }
 
     @Test
+    @DisplayName("binder context")
     public void test07() throws Exception {
         String[] args = { "-x", "String" };
         Test7 test7 = new Test7();
@@ -213,7 +220,7 @@ System.err.println(option);
     }
 
     @Options
-    class Test8 {
+    static class Test8 {
         @Option(argName = "sorter", description = "sort options", args = 4, option = "s", required = false)
         @Bound(binder = S_Binder8.class)
         String arg1;
@@ -226,7 +233,7 @@ System.err.println(option);
 
     public static class S_Binder8 implements Binder<Test8> {
         public void bind(Test8 bean, String[] args, Context context) {
-            assertEquals(true, context.hasOption("s"));
+            assertTrue(context.hasOption("s"));
             assertTrue(args.length <= 4);
 //for (String arg : args) {
 // System.err.println(arg);
@@ -239,6 +246,7 @@ System.err.println(option);
     }
 
     @Test
+    @DisplayName("binder args")
     public void test08() throws Exception {
         String[] args = { "-s", "/x/path", "desc", "datetime", "$1 xpath('/y/path/text()')" };
         Test8 test8 = new Test8();
@@ -252,8 +260,8 @@ System.err.println(option);
         Options.Util.bind(args2, test8);
         assertEquals("/x/path", test8.arg1);
         assertEquals("desc", test8.arg2);
-        assertEquals(null, test8.arg3);
-        assertEquals(null, test8.arg4);
+        assertNull(test8.arg3);
+        assertNull(test8.arg4);
 
         String[] args3 = { "-s", "/x/path", "desc", "3", "4", "5" };
         Options.Util.bind(args3, test8);
@@ -266,7 +274,7 @@ System.err.println(option);
 
     @Options
     @HelpOption(option = "?", description="print this help", helpHandler = ExceptionHandler9.class)
-    class Test9 {
+    static class Test9 {
         @Option(argName = "sorter", description = "sort options", args = 4, option = "s", required = false)
         @Bound(binder = S_Binder9.class)
         String arg1;
@@ -280,7 +288,7 @@ System.err.println(option);
 
     public static class S_Binder9 implements Binder<Test9> {
         public void bind(Test9 bean, String[] args, Context context) {
-            assertEquals(true, context.hasOption("s"));
+            assertTrue(context.hasOption("s"));
             assertTrue(args.length <= 4);
             bean.arg1 = args.length > 0 ? args[0] : null;
             bean.arg2 = args.length > 1 ? args[1] : null;
@@ -297,6 +305,7 @@ System.err.println(option);
     }
 
     @Test
+    @DisplayName("exception helper")
     public void test09() throws Exception {
         String[] args = { "-s", "/x/path", "desc", "3", "4" };
         Test9 test9 = new Test9();
@@ -305,7 +314,7 @@ System.err.println(option);
     }
 
     @Options(exceptionHandler = ExceptionHandler10.class) // default exceptionHandler will call System.exit(1)
-    class Test10 {
+    static class Test10 {
         @Option(argName = "boolean", description = "boolean value", option = "b")
         boolean b;
     }
@@ -318,6 +327,7 @@ System.err.println(option);
     }
 
     @Test
+    @DisplayName("exception helper w/o exit")
     public void test10() throws Exception {
         String[] args = { "-b" };
         Test10 test10 = new Test10();
@@ -327,10 +337,10 @@ System.err.println(option);
         String[] args2 = { "-a" };
         test10 = new Test10();
         Options.Util.bind(args2, test10);
-        assertTrue(!test10.b);
+        assertFalse(test10.b);
     }
 
-    class Test11Super {
+    static class Test11Super {
         @Option(argName = "String2", description = "string value2", args = 1, option = "y", required = false)
         String string2;
         @Option(argName = "b", description = "int value2", args = 1, option = "b", required = false)
@@ -338,15 +348,15 @@ System.err.println(option);
     }
 
     @Options
-    class Test11 extends Test11Super {
+    static class Test11 extends Test11Super {
         @Option(argName = "String", description = "string value", args = 1, option = "x", required = false)
         String string;
         @Option(argName = "a", description = "int value", args = 1, option = "a", required = false)
         int a;
     }
 
-    @DisplayName("super class options")
     @Test
+    @DisplayName("super class options")
     public void test11() throws Exception {
         String[] args = { "-a", "1", "-b", "2", "-x", "xxx", "-y", "yyy" };
         Test11 test11 = new Test11();
@@ -365,26 +375,43 @@ System.err.println(option);
     }
 
     @HelpOption(option = "?", description="print this help", helpHandler = ExceptionHandler12.class)
-    class Test12Super {
+    static class Test12Super {
         @Option(argName = "b", description = "int value2", args = 1, option = "b", required = false)
         int b;
         boolean help;
     }
 
     @Options
-    class Test12 extends Test12Super {
+    static class Test12 extends Test12Super {
         @Option(argName = "a", description = "int value", args = 1, option = "a", required = false)
         int a;
     }
 
-    @DisplayName("super class help option")
     @Test
+    @DisplayName("super class help option")
     public void test12() throws Exception {
         String[] args = { "-?" };
         Test12 test12 = new Test12();
         Options.Util.bind(args, test12);
         assertTrue(test12.help);
     }
-}
 
-/* */
+    enum Enum13 {
+        enumA, enumB, enumX
+    }
+
+    @Options
+    static class Test13 {
+        @Option(argName = "a", description = "enum value", args = 1, option = "a", required = false)
+        Enum13 a;
+    }
+
+    @Test
+    @DisplayName("enum")
+    public void test13() throws Exception {
+        String[] args = { "-a", "enumX" };
+        Test13 test13 = new Test13();
+        Options.Util.bind(args, test13);
+        assertEquals(Enum13.enumX, test13.a);
+    }
+}

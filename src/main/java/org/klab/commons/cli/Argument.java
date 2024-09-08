@@ -50,5 +50,3 @@ public @interface Argument {
         }
     }
 }
-
-/* */

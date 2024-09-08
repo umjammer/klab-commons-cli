@@ -6,8 +6,8 @@
 
 package org.klab.commons.cli;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.klab.commons.cli.Options.ExceptionHandler;
 
@@ -20,14 +20,12 @@ import org.klab.commons.cli.Options.ExceptionHandler;
  */
 public class ExitExceptionHandler<T> implements ExceptionHandler<T> {
     /** */
-    private static Log logger = LogFactory.getLog(ExitExceptionHandler.class);
+    private static Logger logger = Logger.getLogger(ExitExceptionHandler.class.getName());
 
     /* */
     public void handleException(Context<T> context) {
-logger.debug("ExceptionHandler", context.exception);
+logger.log(Level.FINE, "ExceptionHandler", context.exception);
         context.printHelp();
         System.exit(1);
     }
 }
-
-/* */

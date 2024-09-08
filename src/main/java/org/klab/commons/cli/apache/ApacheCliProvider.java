@@ -10,20 +10,17 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.PosixParser;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import org.klab.commons.cli.Bound;
 import org.klab.commons.cli.Binder;
+import org.klab.commons.cli.Bound;
 import org.klab.commons.cli.HelpOption;
 import org.klab.commons.cli.spi.CliProvider;
 
@@ -41,10 +38,10 @@ import vavi.beans.BeanUtil;
 public class ApacheCliProvider extends CliProvider {
 
     /** */
-    private static Log logger = LogFactory.getLog(ApacheCliProvider.class);
+    private static final Logger logger = Logger.getLogger(ApacheCliProvider.class.getName());
 
     /* */
-    @SuppressWarnings({ "static-access", "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public <T> void bind(String[] sourceArgs, T destBean) {
 
         //
@@ -62,7 +59,7 @@ public class ApacheCliProvider extends CliProvider {
         Map<Field, Option> optionFields = new LinkedHashMap<>();
         Map<Field, Option> boundFields = new HashMap<>();
 
-        final Options options = new Options();
+        Options options = new Options();
 
         //
         org.klab.commons.cli.Options.ExceptionHandler<?> helpHandler = null;
@@ -72,38 +69,38 @@ public class ApacheCliProvider extends CliProvider {
             helpHandler = HelpOption.Util.getExceptionHandler(helpOptionAnnotation);
             helpOption = helpOptionAnnotation.option();
             Option option;
-            if (helpOptionAnnotation.description().length() > 0) {
+            if (!helpOptionAnnotation.description().isEmpty()) {
                 option = new Option(helpOptionAnnotation.option(), helpOptionAnnotation.description());
             } else {
-                option = OptionBuilder.create(helpOptionAnnotation.option());
+                option = Option.builder(helpOptionAnnotation.option()).build();
             }
             options.addOption(option);
         }
 
         //
         for (Field field : Util.getOptionFields(destBean)) {
-//logger.debug("field: " + field.getName());
+logger.finer("field: " + field.getName());
             org.klab.commons.cli.Option optionAnnotation = field.getAnnotation(org.klab.commons.cli.Option.class);
 
             //
             Option option;
-            if (optionAnnotation.description().length() > 0) {
-                if (PosixParser.class.isInstance(commandLineParser) && optionAnnotation.option().length() > 1) {
-                    option = OptionBuilder.withLongOpt(optionAnnotation.option()).withDescription(optionAnnotation.description()).create();
+            if (!optionAnnotation.description().isEmpty()) {
+                if (commandLineParser instanceof DefaultParser && optionAnnotation.option().length() > 1) {
+                    option = Option.builder().longOpt(optionAnnotation.option()).desc(optionAnnotation.description()).build();
                 } else {
-                    option = new Option(optionAnnotation.option(), optionAnnotation.description());
+                    option = Option.builder(optionAnnotation.option()).desc(optionAnnotation.description()).build();
                 }
             } else {
-                if (PosixParser.class.isInstance(commandLineParser) && optionAnnotation.option().length() > 1) {
-                    option = OptionBuilder.withLongOpt(optionAnnotation.option()).create();
+                if (commandLineParser instanceof DefaultParser && optionAnnotation.option().length() > 1) {
+                    option = Option.builder().longOpt(optionAnnotation.option()).build();
                 } else {
-                    option = OptionBuilder.create(optionAnnotation.option());
+                    option = Option.builder(optionAnnotation.option()).build();
                 }
             }
             if (optionAnnotation.args() != 0) {
                 option.setArgs(optionAnnotation.args());
             }
-            if (optionAnnotation.argName().length() > 0) {
+            if (!optionAnnotation.argName().isEmpty()) {
                 option.setArgName(optionAnnotation.argName());
             }
             if (optionAnnotation.valueSeparator() != '-') {
@@ -119,18 +116,18 @@ public class ApacheCliProvider extends CliProvider {
             } else {
                 optionFields.put(field, option);
             }
-//logger.debug("@Option: " + field.getName() + ", " + option.getOpt());
+logger.finer("@Option: " + field.getName() + ", " + option.getOpt());
         }
 
         optionFields.putAll(boundFields);
-//logger.debug("★★★★ options: " + optionFields.size());
+logger.finer("options size: " + optionFields.size());
 
-        CommandLine commandLine = null;
+        CommandLine commandLine;
         try {
             commandLine = commandLineParser.parse(options, sourceArgs);
         } catch (ParseException e) {
             exceptionHandler.handleException(new org.klab.commons.cli.Options.ExceptionHandler.Context(e, destBean) {
-                public void printHelp() {
+                @Override public void printHelp() {
                     new HelpFormatter().printHelp(bean.getClass().getSimpleName(), options, true);
                 }
             });
@@ -139,24 +136,27 @@ public class ApacheCliProvider extends CliProvider {
 
         if (helpOption != null && commandLine.hasOption(helpOption)) {
             helpHandler.handleException(new org.klab.commons.cli.Options.ExceptionHandler.Context(null, destBean) {
-                public void printHelp() {
+                @Override public void printHelp() {
                     new HelpFormatter().printHelp(bean.getClass().getSimpleName(), options, true);
                 }
             });
         }
 
-        final CommandLine commandLineForBinder = commandLine;
+        CommandLine commandLineForBinder = commandLine;
         Binder.Context binderContext = new Binder.Context() {
-            public boolean hasOption(String option) {
+            @Override public boolean hasOption(String option) {
                 return commandLineForBinder.hasOption(option);
+            }
+            @Override public void printHelp() {
+                new HelpFormatter().printHelp(destBean.getClass().getSimpleName(), options, true);
             }
         };
 
         for (Field field : optionFields.keySet()) {
             Option option = optionFields.get(field);
-//logger.debug("@Option: " + field.getName() + ", " + option.getOpt() + ", " + option.getLongOpt());
+logger.finer("@Option: " + field.getName() + ", " + option.getOpt() + ", " + option.getLongOpt());
             String opt;
-            if (PosixParser.class.isInstance(commandLineParser) && option.getOpt() == null) {
+            if (commandLineParser instanceof DefaultParser && option.getOpt() == null) {
                 opt = option.getLongOpt();
             } else {
                 opt = option.getOpt();
@@ -174,25 +174,25 @@ public class ApacheCliProvider extends CliProvider {
                     String value = commandLine.getOptionValue(opt); // TODO check args
                     defaultBinder.bind(destBean, field, fieldClass, value, value);
                 }
-logger.debug(option.getArgName() + "[" + opt + "]: " + BeanUtil.getFieldValue(field, destBean));
+logger.fine(option.getArgName() + "[" + opt + "]: " + BeanUtil.getFieldValue(field, destBean));
             }
         }
 
         //
         for (Field field : destBean.getClass().getDeclaredFields()) {
-//logger.debug("field: " + field.getName());
+logger.finer("field: " + field.getName());
             org.klab.commons.cli.Argument argumentAnnotation = field.getAnnotation(org.klab.commons.cli.Argument.class);
             if (argumentAnnotation == null) {
-//logger.debug("not @Argument: " + field.getName());
+logger.finer("not @Argument: " + field.getName());
                 continue;
             }
 
             int index = org.klab.commons.cli.Argument.Util.getIndex(field);
-            boolean requied = org.klab.commons.cli.Argument.Util.isRequred(field);
+            boolean required = org.klab.commons.cli.Argument.Util.isRequred(field);
             try {
                 if (Bound.Util.isBound(field)) {
                     Binder<T> binder = Bound.Util.getBinder(field);
-//logger.debug("args[" + index + "]: " + commandLine.getArgs()[index]);
+logger.finer("args[" + index + "]: " + commandLine.getArgs()[index]);
                     binder.bind(destBean, new String[] { commandLine.getArgs()[index] }, binderContext);
                 } else {
                     Class<?> fieldClass = field.getType();
@@ -200,18 +200,16 @@ logger.debug(option.getArgName() + "[" + opt + "]: " + BeanUtil.getFieldValue(fi
                     defaultBinder.bind(destBean, field, fieldClass, value, value);
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
-                if (requied) {
+                if (required) {
                     helpHandler.handleException(new org.klab.commons.cli.Options.ExceptionHandler.Context(e, destBean) {
                         public void printHelp() {
                             new HelpFormatter().printHelp(bean.getClass().getSimpleName(), options, true);
                         }
                     });
                 } else {
-logger.debug("args[" + index + "]: not required, ignored");
+logger.fine("args[" + index + "]: not required, ignored");
                 }
             }
         }
     }
 }
-
-/* */

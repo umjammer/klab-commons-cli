@@ -6,8 +6,8 @@
 
 package org.klab.commons.cli;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.klab.commons.cli.Options.ExceptionHandler;
 
@@ -20,16 +20,14 @@ import org.klab.commons.cli.Options.ExceptionHandler;
  */
 public class ExceptionExceptionHandler<T> implements ExceptionHandler<T> {
     /** */
-    private static Log logger = LogFactory.getLog(ExceptionExceptionHandler.class);
+    private static Logger logger = Logger.getLogger(ExceptionExceptionHandler.class.getName());
 
     /**
      * @throws IllegalStateException cause is e
      */
     public void handleException(Context<T> context) {
-logger.debug("ExceptionHandler", context.exception);
+logger.log(Level.FINE, "ExceptionHandler", context.exception);
         context.printHelp();
-        throw (RuntimeException) new IllegalStateException().initCause(context.exception);
+        throw (RuntimeException) new IllegalStateException(context.exception);
     }
 }
-
-/* */
