@@ -127,7 +127,7 @@ public class ApacheCliProvider extends CliProvider {
             commandLine = commandLineParser.parse(options, sourceArgs);
         } catch (ParseException e) {
             exceptionHandler.handleException(new org.klab.commons.cli.Options.ExceptionHandler.Context(e, destBean) {
-                public void printHelp() {
+                @Override public void printHelp() {
                     new HelpFormatter().printHelp(bean.getClass().getSimpleName(), options, true);
                 }
             });
@@ -144,8 +144,11 @@ public class ApacheCliProvider extends CliProvider {
 
         final CommandLine commandLineForBinder = commandLine;
         Binder.Context binderContext = new Binder.Context() {
-            public boolean hasOption(String option) {
+            @Override public boolean hasOption(String option) {
                 return commandLineForBinder.hasOption(option);
+            }
+            @Override public void printHelp() {
+                new HelpFormatter().printHelp(destBean.getClass().getSimpleName(), options, true);
             }
         };
 

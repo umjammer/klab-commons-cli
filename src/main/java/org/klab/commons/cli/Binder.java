@@ -8,21 +8,27 @@ package org.klab.commons.cli;
 
 
 /**
- * フィールドへの複雑な代入を実装します。
+ * Implements complex assignment a value into a field.
  *
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (nsano)
  * @version 0.00 070224 nsano initial version <br>
  */
 public interface Binder<T> {
 
-    /** コマンドライン引数解析の状態を表すクラスです。 */
-    public abstract class Context {
-        /** 指定した {@link Option#option} が存在しているかどうか。 */
-        public abstract boolean hasOption(String option);
+    /** A command line parser context */
+    interface Context {
+        /** Does the {@link Option#option} exists or not. */
+        boolean hasOption(String option);
+
+        /**
+         * Prints help.
+         * @since 1.3.3
+         */
+        void printHelp();
     }
 
     /**
-     * ここで代入を実装します。
+     * Implement an assignment here.
      *
      * @throws ArrayIndexOutOfBoundsException
      */
