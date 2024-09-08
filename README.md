@@ -1,8 +1,7 @@
 [![Release](https://jitpack.io/v/umjammer/klab-commons-cli.svg)](https://jitpack.io/#umjammer/klab-commons-cli)
-[![Actions Status](https://github.com/umjammer/klab-commons-cli/workflows/Java%20CI/badge.svg)](https://github.com/umjammer/klab-commons-cli/actions)
+[![Java CI](https://github.com/umjammer/klab-commons-cli/actions/workflows/maven.yml/badge.svg)](https://github.com/umjammer/klab-commons-cli/actions/workflows/maven.yml)
 [![CodeQL](https://github.com/umjammer/klab-commons-cli/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/umjammer/klab-commons-cli/actions/workflows/codeql-analysis.yml)
-![Java](https://img.shields.io/badge/Java-8-b07219)
-[![License](https://img.shields.io/badge/License-APACHE%20LICENSE%2C%20VERSION%202.0-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+![Java](https://img.shields.io/badge/Java-17-b07219)
 
 # klab-commons-cli
 
@@ -15,34 +14,34 @@ This is the wrapper of [Apache Commons CLI](http://commons.apache.org/proper/com
 * Before
 
 ```Java
-        Options options = new Options();
+    Options options = new Options();
 
-        options.addOption(OptionBuilder
-            .hasArg(true)
-            .withArgName("output path")
-            .isRequired(true)
-            .withDescription("set the output path")
-            .create('d')
-        );
+    options.addOption(OptionBuilder
+        .hasArg(true)
+        .withArgName("output path")
+        .isRequired(true)
+        .withDescription("set the output path")
+        .create('d')
+    );
 
-        :
+        ︙
 
-        CommandLineParser parser = new BasicParser();
-        CommandLine cmd = null;
-        try {
-            cmd = parser.parse(options, args);
-        } catch (ParseException e) {
-            new HelpFormatter().printHelp("Foo", options, true);
-            System.exit(-1);
-        }
+    CommandLineParser parser = new BasicParser();
+    CommandLine cmd = null;
+    try {
+        cmd = parser.parse(options, args);
+    } catch (ParseException e) {
+        new HelpFormatter().printHelp("Foo", options, true);
+        System.exit(-1);
+    }
 
-        Foo foo = new Foo();
+    Foo foo = new Foo();
 
-        if (cmd.hasOption('d')) {
-            foo.outDir = cmd.getOptionValue('d');
-        }
+    if (cmd.hasOption('d')) {
+        foo.outDir = cmd.getOptionValue('d');
+    }
 
-        :
+        ︙
 ```
 
 
@@ -62,6 +61,18 @@ public class Foo {
 
         Options.Util.bind(args, foo);
 
-        :
+        ︙
     }
 ```
+
+## References
+
+ * [apache-commons-cli](https://commons.apache.org/proper/commons-cli/)
+
+## TODO
+
+ * add group functionality?
+ * add default value? (just set values into fields?)
+ * class binding
+ * rename project vavi-commomns-cli
+ * BasicParser is deprecated, but Default parser doesn't pass the unit test #test08

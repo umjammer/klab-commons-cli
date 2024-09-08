@@ -6,14 +6,7 @@
   <artifactId>klab-commons-cli</artifactId>
   <version>1.3.3-SNAPSHOT</version>
 
-  <name>klab-commons-cli</name>
-  <description>KLab CLI Annotation Laibrary
-
-TODO
-
-    add group functionality?
-    add default value? (just set values into fields?)
-    class binding</description>
+  <name>KLab CLI Annotation Library</name>
   <url>https://github.com/umjammer/klab-commons-cli</url>
   <inceptionYear>2008</inceptionYear>
   <scm>
@@ -22,27 +15,21 @@ TODO
   <issueManagement>
     <url>https://github.com/umjammer/klab-commons-cli/issues</url>
   </issueManagement>
-  <organization>
-    <name>KLab Inc.</name>
-    <url>http://www.klab.com</url>
-  </organization>
 
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
+        <version>3.12.1</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-          <encoding>UTF-8</encoding>
+          <release>17</release>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M7</version>
+        <version>3.2.5</version>
         <configuration>
           <argLine>
             -Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
@@ -65,7 +52,7 @@ TODO
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.9.1</version>
+        <version>5.10.3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -76,13 +63,13 @@ TODO
     <dependency>
       <groupId>commons-cli</groupId>
       <artifactId>commons-cli</artifactId>
-      <version>1.5.0</version>
+      <version>1.8.0</version>
     </dependency>
 
     <dependency>
       <groupId>com.github.umjammer</groupId>
       <artifactId>vavi-commons</artifactId>
-      <version>1.1.8</version>
+      <version>1.1.14</version>
     </dependency>
 
     <dependency>
