@@ -4,7 +4,7 @@
 
   <groupId>org.klab</groupId>
   <artifactId>klab-commons-cli</artifactId>
-  <version>1.3.3-SNAPSHOT</version>
+  <version>1.3.3</version>
 
   <name>KLab CLI Annotation Library</name>
   <url>https://github.com/umjammer/klab-commons-cli</url>
