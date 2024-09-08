@@ -29,9 +29,9 @@ public class AdvancedBinder extends DefaultBinder {
      */
     @SuppressWarnings("unchecked")
     public void bind(Object destBean, Field field, Class<?> fieldClass, String value, Object elseValue) {
-        if (fieldClass.equals(Boolean.class)) {
+        if (fieldClass.equals(Boolean.class)) { // TODO spec is different from DefaultBinder
             BeanUtil.setFieldValue(field, destBean, value == null || value.length() == 0 ? Boolean.TRUE : Boolean.parseBoolean(value));
-        } else if (fieldClass.equals(Boolean.TYPE)) {
+        } else if (fieldClass.equals(Boolean.TYPE)) { // TODO spec is different from DefaultBinder
             BeanUtil.setFieldValue(field, destBean, value == null || value.length() == 0 ? true : Boolean.parseBoolean(value));
         } else if (fieldClass.equals(File.class)) {
             BeanUtil.setFieldValue(field, destBean, value == null || value.length() == 0 ? null : new File(value));

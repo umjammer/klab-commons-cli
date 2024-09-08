@@ -17,10 +17,24 @@ import vavi.beans.DefaultBinder;
 
 
 /**
- * コマンドライン引数を設定したい POJO に対して設定します。
- * コマンドライン引数を解析するプロバイダークラスと
- * 例外処理を行うクラス、代入を行うクラスを設定します。
+ * Set this annotation to a POJO that you want to assign values into.
+ * Set a command line parser provider and an exception handlar class
+ * and binder (do complex assignment) class also.
+ * <p>
+ * Usage:
+ * <pre><code>
+ *     @Options
+ *     class Pojo {
+ *       @Option
+ *       String style;
+ *     }
  *
+ *     static void main(String[] args) {
+ *         Options.Util.bind(pojo, args);
+ *          :
+ *     }
+ * </code></pre>
+ * </p>
  * @author <a href="mailto:sano-n@klab.org">Naohide Sano</a> (sano-n)
  * @version 0.00 080225 sano-n initial version <br>
  */
@@ -34,59 +48,63 @@ public @interface Options {
      */
     Class<? extends CliProvider> cliProvider() default org.klab.commons.cli.spi.CliProvider.class;
 
-    /** 例外処理クラス */
-    @SuppressWarnings("rawtypes")
+    /** the class that handles exceptions */
     Class<? extends ExceptionHandler> exceptionHandler() default ExitExceptionHandler.class;
 
-    /** 代入処理クラス */
+    /** the class that binds field values */
     Class<? extends DefaultBinder> defaultBinder() default AdvancedBinder.class;
 
-    /** {@link CliProvider} に依って用途は決まります。 */
+    /** Usage depends on {@link CliProvider}. */
     String option() default "";
 
-    /** コマンドライン解析中の例外処理を記述するクラスです。 */
-    public interface ExceptionHandler<T> {
+    /** This class represents an exception handler */
+    interface ExceptionHandler<T> {
 
-        /** コマンドライン解析中の例外の情報を保持するクラスです。 */
-        public abstract class Context<T> {
-            /** */
+        /** A context for an exception handler */
+        abstract class Context<T> {
+
+            /** Creates a context for an exception handler. */
             public Context(Exception exception, T bean) {
                 this.exception = exception;
                 this.bean = bean;
             }
 
-            /** コマンドライン解析中の例外 */
+            /** An exception that occurs during parsing command line. */
             protected Exception exception;
 
-            /** {@link Options} を設定した bean */
+            /** A bean annotated {@link Options} */
             protected T bean;
 
-            /** */
+            /** Gets an exception */
             public Exception getException() {
                 return exception;
             }
 
-            /** */
+            /** A target bean (POJO) */
             public T getBean() {
                 return bean;
             }
 
-            /** コマンドライン引数のヘルプを表示します。 */
+            /** Prints help. */
             public abstract void printHelp();
         }
 
-        /** 例外処理を行います。 */
+        /** Handles an exception. */
         void handleException(Context<T> context);
     }
 
-    /** コマンドライン引数を処理するユーティリティです。 */
+    /**
+     * Utilities for @Options.
+     *
+     * @see #bind(String[], Object)
+     */
     class Util {
 
         private Util() {
         }
 
         /**
-         *
+         * @see Options#cliProvider()
          */
         public static CliProvider getCliProvider(Object bean) {
             try {
@@ -102,7 +120,9 @@ public @interface Options {
             }
         }
 
-        /** */
+        /**
+         * @see Options#exceptionHandler()
+         */
         public static ExceptionHandler<?> getExceptionHandler(Object bean) {
             try {
                 Options options = bean.getClass().getAnnotation(Options.class);
@@ -113,7 +133,9 @@ public @interface Options {
             }
         }
 
-        /** */
+        /**
+         * @see Options#defaultBinder()
+         */
         public static DefaultBinder getDefaultBinder(Object bean) {
             try {
                 Options options = bean.getClass().getAnnotation(Options.class);
@@ -124,14 +146,17 @@ public @interface Options {
             }
         }
 
-        /** */
+        /**
+         * @see Options#option()
+         * @return value is depends on {@link Options#cliProvider()}
+         */
         public static String getOption(Object bean) {
             Options options = bean.getClass().getAnnotation(Options.class);
             return options.option();
         }
 
         /**
-         * POJO destBean にコマンドライン引数 sourceArgs を設定します。
+         * Inject values from sourceArgs into POJO destBean.
          */
         public static void bind(String[] sourceArgs, Object destBean) {
             //

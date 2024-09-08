@@ -2,15 +2,15 @@
 
 ## Advantage
 
-  * [Apache commons-cli](http://commons.apache.org/cli/) 互換
-  * `org.klab.commons.cli.Binded` Binding 機構
+  * [Apache commons-cli](http://commons.apache.org/cli/) compatible
+  * `org.klab.commons.cli.Binded` Binding functionality
 
 ## TODO
 
-  * ~~20090530 File とかよく使う Binder を用意しとく~~
-  * Binder.Context のメソッド
+  * ~~20090530 provides often use Binder like File~~
+  * Binder.Context methods
 
-## Refernces
+## Rivals
 
   * [args4j](https://args4j.dev.java.net)
   * [Java Command Line Parsing](http://www.02.246.ne.jp/~torutk/javahow2/commandline.html)

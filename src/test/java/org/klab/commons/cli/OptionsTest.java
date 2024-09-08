@@ -46,6 +46,7 @@ public class OptionsTest {
     }
 
     @Test
+    @DisplayName("basic usage for any types")
     public void test01() throws Exception {
         String[] args = { "-b", "65", "-c", "c", "-s", "1", "-i", "2", "-l", "3", "-f", "4.0", "-d", "5.0", "-x", "String" };
         Test1 test1 = new Test1();
@@ -83,6 +84,7 @@ public class OptionsTest {
     }
 
     @Test
+    @DisplayName("use poxix parser")
     public void test02() throws Exception {
         String[] args = { "-b", "65", "-c", "c", "-s", "1", "-i", "2", "-l", "3", "-f", "4.0", "-d", "5.0", "-x", "String", "--posix", "posix" };
         Test2 test2 = new Test2();
@@ -112,6 +114,7 @@ public class OptionsTest {
     }
 
     @Test
+    @DisplayName("use binder")
     public void test03() throws Exception {
         String[] args = { "-x", "String" };
         Test3 test3 = new Test3();
@@ -135,6 +138,7 @@ public class OptionsTest {
     }
 
     @Test
+    @DisplayName("help")
     public void test04() throws Exception {
         String[] args = { "-?" };
         Test4 test4 = new Test4();
@@ -162,6 +166,7 @@ public class OptionsTest {
     }
 
     @Test
+    @DisplayName("argument")
     public void test05() throws Exception {
         String[] args = { "-x", "aaa", "args0", "args1", "args2" };
         Test5 test5 = new Test5();
@@ -173,6 +178,7 @@ public class OptionsTest {
     }
 
     @Test
+    @DisplayName("apache direct")
     public void test06() throws Exception {
         org.apache.commons.cli.Option option = org.apache.commons.cli.Option.builder()
           .hasArg(true)
@@ -205,6 +211,7 @@ System.err.println(option);
     }
 
     @Test
+    @DisplayName("binder context")
     public void test07() throws Exception {
         String[] args = { "-x", "String" };
         Test7 test7 = new Test7();
@@ -239,6 +246,7 @@ System.err.println(option);
     }
 
     @Test
+    @DisplayName("binder args")
     public void test08() throws Exception {
         String[] args = { "-s", "/x/path", "desc", "datetime", "$1 xpath('/y/path/text()')" };
         Test8 test8 = new Test8();
@@ -297,6 +305,7 @@ System.err.println(option);
     }
 
     @Test
+    @DisplayName("exception helper")
     public void test09() throws Exception {
         String[] args = { "-s", "/x/path", "desc", "3", "4" };
         Test9 test9 = new Test9();
@@ -318,6 +327,7 @@ System.err.println(option);
     }
 
     @Test
+    @DisplayName("exception helper w/o exit")
     public void test10() throws Exception {
         String[] args = { "-b" };
         Test10 test10 = new Test10();
@@ -345,8 +355,8 @@ System.err.println(option);
         int a;
     }
 
-    @DisplayName("super class options")
     @Test
+    @DisplayName("super class options")
     public void test11() throws Exception {
         String[] args = { "-a", "1", "-b", "2", "-x", "xxx", "-y", "yyy" };
         Test11 test11 = new Test11();
@@ -377,8 +387,8 @@ System.err.println(option);
         int a;
     }
 
-    @DisplayName("super class help option")
     @Test
+    @DisplayName("super class help option")
     public void test12() throws Exception {
         String[] args = { "-?" };
         Test12 test12 = new Test12();
@@ -396,8 +406,8 @@ System.err.println(option);
         Enum13 a;
     }
 
-    @DisplayName("enum")
     @Test
+    @DisplayName("enum")
     public void test13() throws Exception {
         String[] args = { "-a", "enumX" };
         Test13 test13 = new Test13();

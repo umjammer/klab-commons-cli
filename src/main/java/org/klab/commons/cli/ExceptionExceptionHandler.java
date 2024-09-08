@@ -28,6 +28,6 @@ public class ExceptionExceptionHandler<T> implements ExceptionHandler<T> {
     public void handleException(Context<T> context) {
 logger.log(Level.FINE, "ExceptionHandler", context.exception);
         context.printHelp();
-        throw (RuntimeException) new IllegalStateException().initCause(context.exception);
+        throw (RuntimeException) new IllegalStateException(context.exception);
     }
 }
